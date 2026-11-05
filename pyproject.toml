@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hauditor"
+version = "0.1.0"
+description = "Audit RAG answers for numbers and citations their sources don't support."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+hauditor = "hauditor.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hauditor"]
+
+[tool.ruff]
+line-length = 110
+src = ["src", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
