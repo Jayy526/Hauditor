@@ -1,0 +1,7 @@
+{
+  "name": "demo-rag",
+  "url": "http://127.0.0.1:8765/ask",
+  "body": {"question": "{question}"},
+  "answer_path": "answer",
+  "contexts_path": "sources"
+}
