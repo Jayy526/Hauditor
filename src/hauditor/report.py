@@ -37,6 +37,12 @@ td { border-top:1px solid var(--line); padding:5px 6px; vertical-align:top; }
 td.v-grounded, td.v-supported { color:var(--ok); }
 td.v-fabricated, td.v-wrong_numbers, td.v-not_supported { color:var(--bad); font-weight:600; }
 h3 { font-size:13px; margin:12px 0 4px; color:var(--muted); font-weight:600; }
+.note { color:var(--muted); font-size:13px; margin:0 0 8px; }
+.badge { font-size:12px; padding:1px 8px; border-radius:10px; margin-left:6px; font-weight:600; }
+.o-pass { background:var(--ok-bg); color:var(--ok); } .o-fail { background:var(--bad-bg); color:var(--bad); }
+.o-abstain, .o-unverified { background:var(--warn-bg); color:var(--warn); }
+.cat { font-size:12px; color:var(--muted); font-weight:400; margin-left:4px; }
+table.cats { margin-bottom:24px; }
 td.v-grounded { color:var(--ok); } td.v-derived { color:var(--warn); } td.v-unsupported { color:var(--bad); font-weight:600; }
 """
 
@@ -69,6 +75,41 @@ def _cite_row(c) -> str:
     )
 
 
+def _article(r: RecordResult, badge: str = "", note: str = "") -> str:
+    rows = "".join(_row(n) for n in r.numbers) or '<tr><td colspan="4">No numbers in this answer.</td></tr>'
+    cite_html = ""
+    if r.citations:
+        cite_html = "<h3>Citations</h3><table>" + "".join(_cite_row(c) for c in r.citations) + "</table>"
+    note_html = f'<p class="note">{escape(note)}</p>' if note else ""
+    return (
+        f"<article><h2>{escape(r.record.id)}{badge}</h2>"
+        f'<p class="q">{escape(r.record.question)}</p>'
+        f'<p class="a">{_highlight(r)}</p>{note_html}'
+        f"<h3>Numbers</h3><table>{rows}</table>{cite_html}</article>"
+    )
+
+
+def _stats(stats: list[tuple[str, str]]) -> str:
+    return "<div class='stats'>" + "".join(
+        f"<div class='stat'><b>{v}</b><span>{label}</span></div>" for v, label in stats
+    ) + "</div>"
+
+
+def _page(title: str, sub: str, body: str) -> str:
+    return (
+        "<!doctype html><html lang='en'><head><meta charset='utf-8'>"
+        "<meta name='viewport' content='width=device-width,initial-scale=1'>"
+        f"<title>{escape(title)}</title><style>{_CSS}</style></head><body><main>"
+        f"<h1>{escape(title)}</h1><p class='sub'>{sub}</p>{body}</main></body></html>"
+    )
+
+
+_LEGEND = (
+    "Green numbers appear in a source, amber ones are computed from two source numbers, red ones appear "
+    "nowhere. Each citation is checked for a real source, matching numbers and supporting text."
+)
+
+
 def render_html(summary: AuditSummary, title: str = "Hauditor report") -> str:
     s = summary.to_dict()
     stats = [
@@ -79,29 +120,56 @@ def render_html(summary: AuditSummary, title: str = "Hauditor report") -> str:
     ]
     # Worst answers first so the reader sees problems immediately.
     ordered = sorted(summary.results, key=lambda r: -(len(r.unsupported) + len(r.bad_citations)))
-    articles = []
-    for r in ordered:
-        rows = "".join(_row(n) for n in r.numbers) or '<tr><td colspan="4">No numbers in this answer.</td></tr>'
-        cite_html = ""
-        if r.citations:
-            cite_html = "<h3>Citations</h3><table>" + "".join(_cite_row(c) for c in r.citations) + "</table>"
-        articles.append(
-            f"<article><h2>{escape(r.record.id)}</h2>"
-            f'<p class="q">{escape(r.record.question)}</p>'
-            f'<p class="a">{_highlight(r)}</p>'
-            f"<h3>Numbers</h3><table>{rows}</table>{cite_html}</article>"
-        )
-    stat_html = "".join(f"<div class='stat'><b>{v}</b><span>{label}</span></div>" for v, label in stats)
-    return (
-        "<!doctype html><html lang='en'><head><meta charset='utf-8'>"
-        "<meta name='viewport' content='width=device-width,initial-scale=1'>"
-        f"<title>{escape(title)}</title><style>{_CSS}</style></head><body><main>"
-        f"<h1>{escape(title)}</h1>"
-        "<p class='sub'>Every number in each answer, checked against the retrieved context. "
-        "Green appears in a source, amber is computed from two source numbers, red appears nowhere. "
-        "Each citation is checked for a real source, matching numbers and supporting text.</p>"
-        f"<div class='stats'>{stat_html}</div>{''.join(articles)}</main></body></html>"
+    body = _stats(stats) + "".join(_article(r) for r in ordered)
+    return _page(title, "Every number in each answer, checked against the retrieved context. " + _LEGEND, body)
+
+
+def _fmt_score(score: float | None) -> str:
+    return "" if score is None else f"{score:.0f}"
+
+
+_OUTCOME_ORDER = {"fail": 0, "unverified": 1, "abstain": 2, "pass": 3}
+
+
+def render_live_html(report, title: str | None = None) -> str:
+    """Render a :class:`hauditor.live.LiveReport`."""
+    d = report.to_dict()
+    title = title or f"Hauditor live report: {report.target}"
+    stats = [(f"{d['hauditor_score']:.0f}", "Hauditor score (0-100)")]
+    totals = {o: sum(c.get(o, 0) for c in d["categories"].values()) for o in ("pass", "fail", "abstain")}
+    stats += [(str(totals["fail"]), "probes failed"), (str(totals["abstain"]), "abstained"),
+              (str(len(report.results)), "probes run")]
+
+    cat_rows = "".join(
+        f"<tr><td>{escape(cat.replace('_', ' '))}</td>"
+        f"<td>{_fmt_score(c['score'])}</td>"
+        f"<td>{c['pass']}</td><td>{c['fail']}</td><td>{c['abstain']}</td><td>{c['unverified']}</td>"
+        f"<td>{c['error']}</td></tr>"
+        for cat, c in d["categories"].items()
+    )
+    cat_table = (
+        "<h3>By question type</h3><table class='cats'><tr><td><b>type</b></td><td><b>score</b></td>"
+        "<td><b>pass</b></td><td><b>fail</b></td><td><b>abstain</b></td><td><b>unverified</b></td>"
+        f"<td><b>error</b></td></tr>{cat_rows}</table>"
     )
 
+    articles = []
+    for pr in sorted(report.results, key=lambda r: _OUTCOME_ORDER[r.outcome.value]):
+        badge = (f' <span class="badge o-{pr.outcome.value}">{pr.outcome.value}</span>'
+                 f' <span class="cat">{escape(pr.probe.category.value.replace("_", " "))}</span>')
+        if pr.result is None:
+            articles.append(
+                f"<article><h2>{escape(pr.probe.id)}{badge}</h2><p class='q'>{escape(pr.probe.question)}</p>"
+                f"<p class='note'>{escape(pr.error or pr.reason)}</p></article>"
+            )
+        else:
+            articles.append(_article(pr.result, badge, pr.reason))
 
-__all__ = ["Verdict", "render_html"]
+    sub = (
+        "Questions written to tempt the app into inventing numbers, facts or citations, and how it answered. "
+        "Abstaining on an answerable question earns half credit. " + _LEGEND
+    )
+    return _page(title, sub, _stats(stats) + cat_table + "<h3>Probes</h3>" + "".join(articles))
+
+
+__all__ = ["Verdict", "render_html", "render_live_html"]

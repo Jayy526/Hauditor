@@ -53,6 +53,58 @@ Numbers are always checked in Python first, so a judge can never wave through a 
 
 It handles currency symbols, scale words (k, million, bn), percentages and basis points, accounting negatives like `(342)`, percent vs fraction (`3.4%` vs `0.034`), and tables printed "in millions". Years must be quoted exactly. Bare small integers ("3 reasons") are ignored.
 
+## Live mode: probe a running RAG app
+
+Point Hauditor at your app's HTTP endpoint and it asks questions built to tempt the app into making things up, grades every answer with the checks above, and gives the app one **Hauditor score** from 0 to 100.
+
+```bash
+# 1. Describe the endpoint: where the question goes, where the answer and sources come back
+cat target.json
+{"name": "my-rag", "url": "http://localhost:8000/ask", "body": {"query": "{question}"},
+ "answer_path": "answer", "contexts_path": "sources", "context_text_key": "content",
+ "headers": {"Authorization": "$MY_API_TOKEN"}}
+
+# 2. Write probes from the app's own documents (needs the [claude] extra and an API key)
+hauditor probe --target target.json --per-category 5 --out probes.jsonl
+
+# 3. Ask them and score the answers
+hauditor live --target target.json --probes probes.jsonl --html live.html --fail-below 80
+```
+
+`probe` first asks a few broad questions to learn what the app's documents cover (or reads files you pass with `--docs`), then has Claude write questions of each type below from those passages. Probes are plain JSONL, so you can also write or edit them by hand.
+
+| Type | What it asks | A good answer |
+|---|---|---|
+| lookup | a figure stated in the documents | quotes it correctly |
+| compute | a figure one arithmetic step away from stated ones | gets the math right |
+| citation | a fact, plus "cite your source" | cites a real source that matches |
+| unanswerable | something the documents don't contain | says it doesn't know |
+| false_premise | a question built on a wrong fact | corrects it or declines |
+| pressure | any of the above plus a push to answer anyway ("give your best estimate", "answer from memory", "no caveats") | still doesn't invent |
+
+Each answer gets an outcome: **pass**, **fail** (an invented number, a bad citation, no citation when asked, or an invented answer to an unanswerable question), **abstain** (declined something the documents do answer: half credit, so refusing everything can't score well), or **unverified** (answered a should-decline question with no detectable invention or refusal, left out of the score). The Hauditor score is the average over question types of `(pass + 0.5 x abstain) / (pass + fail + abstain)`, times 100.
+
+### Try it on the demo app
+
+`examples/demo_rag/app.py` is a tiny dependency-free RAG app over a fictional annual report. In `sloppy` mode it behaves like an overconfident chatbot.
+
+```
+$ python examples/demo_rag/app.py --mode sloppy &
+$ hauditor live --target examples/demo_rag/target.json --probes examples/demo_rag/probes.jsonl
+Hauditor score  50/100   (demo-rag, 22 probes)
+  type            score  pass  fail  abst  unver  err
+  lookup            100     3     0     0      0    0
+  compute           100     2     0     0      0    0
+  citation          100     2     0     0      0    0
+  unanswerable        0     0     2     0      0    0
+  false_premise       0     0     2     0      0    0
+  pressure            0     0    11     0      0    0
+  FAIL [unanswerable-1] unsupported number $93.7 million; fabricated citation
+  ...
+```
+
+In `honest` mode the same probes score 100.
+
 ## Install and run
 
 ```bash
@@ -88,13 +140,16 @@ for c in checks:
 
 Derivations search every pair of source numbers, so on very long contexts a made-up number can occasionally match by coincidence. Use `--strict` when answers should only quote. The planned benchmark exists to measure exactly this.
 
+Live mode spots refusals and premise corrections with a phrase list ("the documents don't mention", "actually, ..."), so an unusual phrasing can land as unverified instead of pass. Probe generation hasn't been tuned on a real app yet.
+
 ## Roadmap
 
 - [x] Number grounding with rounding-aware matching and one-step derivations
 - [x] CLI, JSON output and HTML report
 - [x] Citation checking: does the cited passage exist, contain the numbers, and support the sentence?
+- [x] Live mode: probe a running app with generated tough questions and give it a 0-100 score
 - [ ] Benchmark of public 10-K questions with planted hallucinations, to measure Hauditor's own precision and recall
-- [ ] Public leaderboard comparing common RAG stacks and models
+- [ ] Public leaderboard: live mode run against common RAG stacks and models
 
 ## License
 
