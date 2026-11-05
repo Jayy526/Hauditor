@@ -37,20 +37,36 @@ SCALE_WORDS = {
 
 CURRENCY_SYMBOLS = "$€£¥₹"
 
-# One regex that captures: optional sign/paren, optional currency symbol,
+# One regex that captures: optional accounting paren, sign, currency symbol,
 # the digits, an optional scale word, and an optional percent marker.
+# Accounting negatives come as "($342)" or "$(342)"; the closing paren is only
+# consumed when an opening one was seen, so "(see 2024)" isn't misread.
 _NUMBER_RE = re.compile(
     r"""
-    (?P<neg>[-−–(])?                                  # minus sign or accounting paren
+    (?P<p1>\()?                                       # accounting paren before the symbol
+    (?P<neg>[-−–])?                                   # minus sign
     (?P<cur>[$€£¥₹]|(?:USD|EUR|GBP|INR)\s?)?          # currency
+    (?P<p2>\()?                                       # or after it: "$(342)"
     (?<![\w.])                                        # not glued to a word or decimal
     (?P<num>\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?|\.\d+)
     (?![\w.]*\d)                                      # don't stop midway through a token
+    (?(p1)(?P<c1>\))?|(?(p2)(?P<c2>\))?))              # matching close paren, if opened
     (?:\s?(?P<scale>thousand|million|billion|trillion|mm|mn|bn|tn|k|m|b|t)\b)?
     (?P<pct>\s?(?:%|percent\b|per\s?cent\b|pct\b))?
     (?:\s?(?P<pp>percentage\s+points?|pp|bps|basis\s+points?)\b)?
     """,
     re.IGNORECASE | re.VERBOSE,
+)
+
+# Words that make a number explicitly approximate: "about 3,200".
+_HEDGE_RE = re.compile(r"(?:\b(?:about|approximately|approx\.|around|roughly|nearly|almost|some)|~)\s*$", re.IGNORECASE)
+# Words that make a number negative: "negative 3.2%".
+_SIGN_WORD_RE = re.compile(r"\b(?:negative|minus)\s+$", re.IGNORECASE)
+# "December 31" or "Dec. 31": a day of the month, not a figure.
+_MONTH_RE = re.compile(
+    r"\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|"
+    r"sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+$",
+    re.IGNORECASE,
 )
 
 
@@ -111,15 +127,31 @@ def extract(text: str, *, ignore_small_ints: int = 10) -> list[Quantity]:
         value *= scale
         tolerance = 0.5 * (10 ** -decimals) * scale
 
+        start = m.start("cur") if has_cur else m.start("num")
+        if m.group("c2") and not has_cur:
+            start = m.start("p2")
+        if m.group("c1"):
+            start = m.start("p1")
+        before_text = text[max(0, start - 24):start]
+
+        if decimals == 0 and scale == 1.0 and value <= 31 and _MONTH_RE.search(before_text):
+            continue  # day of the month
+
         # "-5" is negative, but not the hyphen in "Q3-2024" or "2023-2024".
-        # "(5)" is negative (accounting style), but "(5 items)" is an aside.
+        # "(342)" and "$(342)" are negative (accounting style), but a year in
+        # parentheses, "(2024)", is just a year.
+        looks_like_year = decimals == 0 and scale == 1.0 and "," not in num and 1900 <= value <= 2100
         neg = m.group("neg")
-        before = text[m.start() - 1] if m.start() > 0 else " "
-        if neg == "(":
-            if text[m.end():m.end() + 1] == ")":
-                value = -value
-        elif neg and not before.isalnum():
+        before = text[m.start("neg") - 1] if neg and m.start("neg") > 0 else " "
+        if (m.group("c1") or m.group("c2")) and not looks_like_year or neg and not before.isalnum() or _SIGN_WORD_RE.search(before_text):
             value = -value
+
+        # "about 3,200" claims only hundreds: widen tolerance by trailing zeros.
+        if decimals == 0 and _HEDGE_RE.search(before_text):
+            digits = num.replace(",", "")
+            zeros = len(digits) - len(digits.rstrip("0"))
+            if zeros and zeros < len(digits):
+                tolerance = max(tolerance, 0.5 * (10**zeros) * scale)
 
         if is_pct:
             kind = Kind.PERCENT
@@ -139,7 +171,6 @@ def extract(text: str, *, ignore_small_ints: int = 10) -> list[Quantity]:
         ):
             continue
 
-        start = m.start("cur") if has_cur else m.start("num")
         out.append(
             Quantity(
                 raw=text[start:m.end()].strip(),

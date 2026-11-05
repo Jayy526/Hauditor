@@ -70,7 +70,17 @@ def main(argv: list[str] | None = None) -> int:
     _add_checker_args(lv)
     lv.add_argument("--fail-below", type=float, metavar="SCORE", help="exit 1 if the Hauditor score is below SCORE")
 
+    b = sub.add_parser("bench", help="measure Hauditor itself on planted hallucinations")
+    b.add_argument("corpus", nargs="+", help="JSONL passages ({id, company, text}) to plant hallucinations in")
+    b.add_argument("--seed", type=int, default=7)
+    b.add_argument("--save-cases", metavar="FILE", help="write the generated, labelled cases here")
+    b.add_argument("--markdown", metavar="FILE", help="write the results table as Markdown here")
+    b.add_argument("--json", metavar="FILE", help="write results as JSON here")
+    b.add_argument("--show-misses", action="store_true", help="print every case Hauditor got wrong")
+
     args = p.parse_args(argv)
+    if args.cmd == "bench":
+        return _cmd_bench(args)
     if args.cmd == "audit":
         return _cmd_audit(args)
     if args.cmd == "probe":
@@ -105,6 +115,33 @@ def _cmd_audit(args) -> int:
 
     if args.fail_above is not None and s["answer_hallucination_rate"] > args.fail_above:
         return 1
+    return 0
+
+
+def _cmd_bench(args) -> int:
+    from pathlib import Path
+
+    from .bench.generate import build_cases, load_corpus, save_cases
+    from .bench.run import run_bench
+
+    md, js = [], {}
+    for path in args.corpus:
+        cases = build_cases(load_corpus(path), seed=args.seed)
+        if args.save_cases:
+            save_cases(cases, args.save_cases if len(args.corpus) == 1 else f"{args.save_cases}.{Path(path).stem}")
+        res = run_bench(cases)
+        name = Path(path).stem
+        text = res.to_markdown(title=name)
+        print(text)
+        if args.show_misses:
+            for case, why in res.misses:
+                print(f"  MISS [{case.record.id}] {case.note}: {why}")
+        md.append(text)
+        js[name] = res.to_dict()
+    if args.markdown:
+        Path(args.markdown).write_text("\n".join(md), encoding="utf-8")
+    if args.json:
+        Path(args.json).write_text(json.dumps(js, indent=2), encoding="utf-8")
     return 0
 
 

@@ -161,6 +161,15 @@ def resolve(source_id: str, sources: list[Source]) -> Source | None:
 # Judges
 # --------------------------------------------------------------------------
 
+# Words that only describe arithmetic ("a difference of", "up 11%"). The number
+# checker already verifies the math, so the lexical judge shouldn't demand that
+# the source repeat these words.
+_MATH_WORDS = set(
+    """difference differ total sum combined increase increased decrease decreased change changed growth grew
+    rose rise fell fall declined decline higher lower up down gain loss net ratio percentage percent point points
+    times half double doubled tripled share represent represents amount""".split()  # noqa: SIM905
+)
+
 _STOP = set(
     """a an and are as at be been but by for from has have had in into is it its of on or that the
     their there these this those to was were which while with will would than then also about over
@@ -179,7 +188,7 @@ def _stem(w: str) -> str:
 
 def _content_words(text: str) -> set[str]:
     words = re.findall(r"[a-z][a-z'-]+", text.lower())
-    return {_stem(w) for w in words if w not in _STOP and len(w) > 2}
+    return {_stem(w) for w in words if w not in _STOP and w not in _MATH_WORDS and len(w) > 2}
 
 
 class LexicalJudge:
