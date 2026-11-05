@@ -34,6 +34,9 @@ mark.derived { background:var(--warn-bg); }
 mark.unsupported { background:var(--bad-bg); outline:1px solid var(--bad); }
 table { width:100%; border-collapse:collapse; font-size:13px; }
 td { border-top:1px solid var(--line); padding:5px 6px; vertical-align:top; }
+td.v-grounded, td.v-supported { color:var(--ok); }
+td.v-fabricated, td.v-wrong_numbers, td.v-not_supported { color:var(--bad); font-weight:600; }
+h3 { font-size:13px; margin:12px 0 4px; color:var(--muted); font-weight:600; }
 td.v-grounded { color:var(--ok); } td.v-derived { color:var(--warn); } td.v-unsupported { color:var(--bad); font-weight:600; }
 """
 
@@ -58,24 +61,35 @@ def _row(n) -> str:
     )
 
 
+def _cite_row(c) -> str:
+    return (
+        f"<tr><td>{escape(c.claim.text)}</td><td>{escape(', '.join(c.claim.source_ids))}</td>"
+        f'<td class="v-{c.verdict.value}">{c.verdict.value.replace("_", " ")}</td>'
+        f"<td>{escape(c.detail)}</td></tr>"
+    )
+
+
 def render_html(summary: AuditSummary, title: str = "Hauditor report") -> str:
     s = summary.to_dict()
     stats = [
-        (f"{s['answer_hallucination_rate']:.0%}", "answers with an invented number"),
-        (f"{s['unsupported_number_rate']:.0%}", "of numbers unsupported"),
-        (str(s["numbers_checked"]), "numbers checked"),
+        (f"{s['answer_hallucination_rate']:.0%}", "answers flagged"),
+        (f"{s['unsupported_number_rate']:.0%}", f"of {s['numbers_checked']} numbers unsupported"),
+        (f"{s['bad_citation_rate']:.0%}", f"of {s['citations_checked']} citations bad"),
         (str(s["answers"]), "answers audited"),
     ]
     # Worst answers first so the reader sees problems immediately.
-    ordered = sorted(summary.results, key=lambda r: -(len(r.unsupported)))
+    ordered = sorted(summary.results, key=lambda r: -(len(r.unsupported) + len(r.bad_citations)))
     articles = []
     for r in ordered:
         rows = "".join(_row(n) for n in r.numbers) or '<tr><td colspan="4">No numbers in this answer.</td></tr>'
+        cite_html = ""
+        if r.citations:
+            cite_html = "<h3>Citations</h3><table>" + "".join(_cite_row(c) for c in r.citations) + "</table>"
         articles.append(
             f"<article><h2>{escape(r.record.id)}</h2>"
             f'<p class="q">{escape(r.record.question)}</p>'
             f'<p class="a">{_highlight(r)}</p>'
-            f"<table>{rows}</table></article>"
+            f"<h3>Numbers</h3><table>{rows}</table>{cite_html}</article>"
         )
     stat_html = "".join(f"<div class='stat'><b>{v}</b><span>{label}</span></div>" for v, label in stats)
     return (
@@ -84,7 +98,8 @@ def render_html(summary: AuditSummary, title: str = "Hauditor report") -> str:
         f"<title>{escape(title)}</title><style>{_CSS}</style></head><body><main>"
         f"<h1>{escape(title)}</h1>"
         "<p class='sub'>Every number in each answer, checked against the retrieved context. "
-        "Green appears in a source, amber is computed from two source numbers, red appears nowhere.</p>"
+        "Green appears in a source, amber is computed from two source numbers, red appears nowhere. "
+        "Each citation is checked for a real source, matching numbers and supporting text.</p>"
         f"<div class='stats'>{stat_html}</div>{''.join(articles)}</main></body></html>"
     )
 
