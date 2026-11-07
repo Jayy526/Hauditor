@@ -32,7 +32,7 @@ After changing the checker, `python leaderboard/regrade.py` grades the saved ans
 
 To check the setup without downloading a model, run `python leaderboard/fake_ollama.py` and pass `--base-url http://127.0.0.1:11435`. Scores from the fake model mean nothing; it only shows that the pipeline runs.
 
-The [`leaderboard` workflow](../.github/workflows/leaderboard.yml) runs every stack with every model on GitHub's runners and publishes the page to GitHub Pages. It runs monthly, on demand, and on pull requests that change this folder.
+The [`leaderboard` workflow](../.github/workflows/leaderboard.yml) runs every stack with every model on GitHub's runners, monthly, on demand, and on pull requests that change this folder. New results are reviewed and committed to [`results/`](results/), and the [`pages` workflow](../.github/workflows/pages.yml) publishes the page from those. The published page always matches the committed results.
 
 ## Adding a stack or model
 

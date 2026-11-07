@@ -1,7 +1,9 @@
 name: leaderboard
 
 # Runs the Hauditor probe set against popular RAG frameworks with open models
-# served by Ollama, then publishes the results page to GitHub Pages.
+# served by Ollama. Results come back as an artifact and as RESULT_JSON lines in
+# the log; reviewed results are committed to leaderboard/results, and the
+# pages workflow publishes those.
 on:
   workflow_dispatch:
   schedule:
@@ -69,24 +71,7 @@ jobs:
         run: |
           python leaderboard/build_site.py --results results --out site
           cat site/leaderboard.md >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
       - uses: actions/upload-artifact@v4
         with:
           name: leaderboard
           path: site
-
-  deploy:
-    needs: site
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
