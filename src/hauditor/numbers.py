@@ -144,7 +144,7 @@ def extract(text: str, *, ignore_small_ints: int = 10) -> list[Quantity]:
             continue  # day of the month
         if decimals == 0 and scale == 1.0 and not m.group("cur") and not m.group("pct") and _REF_RE.search(before_text):
             continue  # "page 15", "paragraph 18": a pointer into a document, not a figure
-        if value == 100 and re.search(r"[x*\u00d7]\s*$", before_text):
+        if value == 100 and re.search(r"(?:[x*\u00d7]|\\times|\btimes|multipl(?:y|ied) by)\s*$", before_text):
             continue  # "(a / b) x 100": turning a ratio into a percentage
 
         # "-5" is negative, but not the hyphen in "Q3-2024" or "2023-2024".

@@ -44,6 +44,17 @@ HONEST = [
     ("Refrigerated trucking revenue = NOK 5,980 million Total revenue = NOK 5,980 million + NOK 2,614 million "
     "+ NOK 818 million"),
     "1,930 (year-end 2025) - 1,410 (year-end 2024) = 520. Therefore, 520 freight software customers were added.",
+    "The customer base went from 1,410 to 1,930 between 2024 and 2025.",
+    "Share = \\frac{5,980}{9,412} \\times 100",
+    ("The dividend per share for fiscal 2025 is NOK 1.80, and for fiscal 2024 it was NOK 1.50.\n\n"
+     "To find the increase in dividend per share, we subtract the fiscal 2024 value from the fiscal 2025 value:\n\n"
+     "NOK 1.80 - NOK 1.50 = NOK 0.30\n\n"
+     "Therefore, the dividend per share increased by NOK 0.30 for fiscal 2025 compared with fiscal 2024."),
+    ("The total revenue for fiscal 2025 was NOK 9,412 million, while it was NOK 8,736 million in fiscal 2024. "
+     "The figure for the change in total revenue in fiscal 2025 is NOK 676 million (NOK 9,412 million - "
+     "NOK 8,736 million)."),
+    ("Total revenue for fiscal 2025 was NOK 9,412 million, an increase from NOK 8,736 million in the previous "
+     "fiscal year."),
 ]
 
 # (answer, the passages the stack retrieved, the figures that are actually wrong).

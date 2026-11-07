@@ -76,7 +76,8 @@ def _clause(text: str, start: int, end: int) -> tuple[int, int]:
     return left, right
 
 
-_SENT_RE = re.compile(r"(?<=[.!?])\s+")
+_YEAR_SPAN_RE = re.compile(r"\b(?:between|from)\s+((?:19|20)\d\d)\s+(?:and|to|-)\s+((?:19|20)\d\d)\b", re.IGNORECASE)
+_SENT_RE = re.compile(r"(?<=[.!?])\s+|\n\s*\n")
 
 
 def _sentence(text: str, start: int, end: int) -> tuple[int, int]:
@@ -87,13 +88,14 @@ def _sentence(text: str, start: int, end: int) -> tuple[int, int]:
     return left, (m.start() if m else len(text))
 
 
-def _bound_year(text: str, q: Quantity) -> str | None:
-    """The year grammatically attached to ``q``, if there is one."""
+def _bound_year(text: str, q: Quantity) -> tuple[str, int] | None:
+    """The year grammatically attached to ``q`` and where it is, if there is one."""
     m = _YEAR_AFTER_RE.match(text, q.end)
     if m and m.end() - q.end <= 40:
-        return m.group(1)
-    m = _YEAR_BEFORE_RE.search(text[max(0, q.start - 16):q.start])
-    return m.group(1) if m else None
+        return m.group(1), m.start(1)
+    lo = max(0, q.start - 16)
+    m = _YEAR_BEFORE_RE.search(text[lo:q.start])
+    return (m.group(1), lo + m.start(1)) if m else None
 
 
 def signature(text: str, q: Quantity, window: int = 6) -> Signature:
@@ -116,10 +118,20 @@ def signature(text: str, q: Quantity, window: int = 6) -> Signature:
     years = [y for y in shift if y.kind == Kind.YEAR]
     figures = [x for x in shift if x.kind != Kind.YEAR]
 
-    pick = _bound_year(text, q)
+    own = _bound_year(text, q)
+    pick = own[0] if own else None
     if pick is None:
-        taken = {b for f in figures if (f.start, f.end) != (q.start, q.end) and (b := _bound_year(text, f))}
-        free = [y for y in years if str(int(y.value)) not in taken]
+        others = [f for f in figures if (f.start, f.end) != (q.start, q.end)]
+        bound = {f: _bound_year(text, f) for f in others}
+        taken = {b[1] for b in bound.values() if b}
+        # "between 2024 and 2025", "from 2024 to 2025": a span, not one figure's year.
+        for m in _YEAR_SPAN_RE.finditer(text, s_left, s_right):
+            taken |= {m.start(1), m.start(2)}
+        free = [y for y in years if y.start not in taken]
+        # The whole sentence's year only stands for this figure when no other
+        # figure in the sentence is also waiting for one: "(9,412 - 8,736)"
+        # next to "in fiscal 2025" says nothing about which is 2025's.
+        alone = not any(b is None for b in bound.values())
 
         def gap(y: Quantity) -> int:
             return y.start - q.end if y.start >= q.end else q.start - y.end
@@ -127,7 +139,7 @@ def signature(text: str, q: Quantity, window: int = 6) -> Signature:
         in_clause = [y for y in free if left <= y.start and y.end <= right]
         if in_clause:
             pick = str(int(min(in_clause, key=gap).value))
-        elif len({int(y.value) for y in free}) == 1:
+        elif alone and len({int(y.value) for y in free}) == 1:
             pick = str(int(free[0].value))
     nearest = frozenset({pick}) if pick else frozenset()
 
