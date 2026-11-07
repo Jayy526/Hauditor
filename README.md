@@ -32,6 +32,7 @@ answers flagged            5 (55.6%)
 | grounded | Appears in a source, within the answer's own rounding | "$4.2 billion" vs source "$4,213 million" |
 | derived | One arithmetic step from two source numbers | "grew 11.5%" from $4,213M and $3,780M |
 | unsupported | Nowhere in the sources and not computable from them | "grew 14%" |
+| misaligned | In a source, but there it belongs to a different period or metric | 2024's revenue given as 2025's |
 
 ## How a citation is judged
 
@@ -107,17 +108,17 @@ In `honest` mode the same probes score 100.
 
 ## How accurate is it?
 
-Hauditor is measured on a benchmark of honest answers with one planted error each, so every label is known by construction ([details](benchmarks/README.md)). On the held-out set, written and committed before its first run:
+Hauditor is measured on a benchmark of honest answers with one planted error each, so every label is known by construction ([details](benchmarks/README.md)). On the latest held-out set, written and committed before its first run:
 
-| | Held-out (221 cases) |
+| | Held-out (232 cases) |
 |---|---|
-| Precision (flags that were real) | **100%** |
-| Recall (planted errors caught) | **93.3%** |
+| Precision (flags that were real) | **100.0%** |
+| Recall (planted errors caught) | **99.4%** |
 
-It catches every shifted, transposed or rescaled figure, wrong year, invented claim, fabricated or misattributed citation and wrong calculation in that set, with no false alarms on rounding, hedged figures, correct arithmetic or reworded units. Its blind spot is two real figures swapped with each other, which it catches only when the swap also changes a figure's scale. The benchmark also found three parser bugs, which are now fixed.
+That covers shifted, transposed and rescaled figures, wrong years, invented claims, fabricated and misattributed citations, wrong arithmetic, and two real figures swapped with each other. The swap case is handled by an alignment check that ties each number to its period and metric. Rounding, hedged figures, correct arithmetic, reworded units and answers that restate periods in a different order all passed without false alarms. The benchmark has also found and fixed four weaknesses so far; the write-up covers each one.
 
 ```bash
-hauditor bench benchmarks/corpus_heldout.jsonl --show-misses
+hauditor bench benchmarks/corpus_heldout2.jsonl --show-misses
 ```
 
 ## Install and run
@@ -164,7 +165,7 @@ Live mode spots refusals and premise corrections with a phrase list ("the docume
 - [x] Citation checking: does the cited passage exist, contain the numbers, and support the sentence?
 - [x] Live mode: probe a running app with generated tough questions and give it a 0-100 score
 - [x] Benchmark with planted hallucinations to measure Hauditor's own precision and recall
-- [ ] Catch swapped figures by tying each number to what it measures
+- [x] Catch swapped figures by tying each number to its period and metric
 - [ ] Add real SEC 10-K passages to the benchmark
 - [ ] Public leaderboard: live mode run against common RAG stacks and models
 

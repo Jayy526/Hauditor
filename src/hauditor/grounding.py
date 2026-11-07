@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from itertools import permutations
 
+from .alignment import check_alignment
 from .numbers import Kind, Quantity, extract
 
 
@@ -22,6 +23,13 @@ class Verdict(str, Enum):
     GROUNDED = "grounded"
     DERIVED = "derived"
     UNSUPPORTED = "unsupported"
+    # The number is in a source, but there it belongs to a different metric
+    # or period ("2024's revenue given as 2025's").
+    MISALIGNED = "misaligned"
+
+    @property
+    def is_bad(self) -> bool:
+        return self in (Verdict.UNSUPPORTED, Verdict.MISALIGNED)
 
 
 @dataclass
@@ -95,8 +103,10 @@ class GroundingChecker:
         unit_hints: bool = True,
         ignore_small_ints: int = 10,
         max_pairs_sources: int = 80,
+        align: bool = True,
     ) -> None:
         self.allow_derived = allow_derived
+        self.align = align
         self.unit_hints = unit_hints
         self.ignore_small_ints = ignore_small_ints
         self.max_pairs_sources = max_pairs_sources
@@ -113,8 +123,30 @@ class GroundingChecker:
 
         results = []
         for q in extract(answer, ignore_small_ints=self.ignore_small_ints):
-            results.append(self._check_one(q, pool))
+            res = self._check_one(q, pool)
+            if self.align and res.verdict == Verdict.GROUNDED and q.kind != Kind.YEAR:
+                res = self._align(answer, res, sources)
+            results.append(res)
         return results
+
+    def _align(self, answer: str, res: NumberCheck, sources: list[Source]) -> NumberCheck:
+        """Downgrade a grounded number that sits in another figure's slot.
+
+        Only fires when every source containing the value disagrees; if any
+        source uses it the way the answer does, it stays grounded.
+        """
+        problems = []
+        for src in sources:
+            if not any(res.quantity.matches(q.value) or res.quantity.matches(-q.value) for q in src.quantities):
+                continue
+            mis = check_alignment(answer, res.quantity, src.text)
+            if mis is None:
+                return res
+            problems.append((src, mis))
+        if not problems:
+            return res
+        src, mis = problems[0]
+        return NumberCheck(res.quantity, Verdict.MISALIGNED, mis.detail, src.id)
 
     def _check_one(self, q: Quantity, pool: list[tuple[float, str, Source]]) -> NumberCheck:
         # 1) Direct match, allowing for the answer's rounding.
