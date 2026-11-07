@@ -54,6 +54,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--corpus", default=str(HERE / "data" / "corpus.jsonl"))
     ap.add_argument("--probes", default=str(HERE / "data" / "probes.jsonl"))
     ap.add_argument("--out", default=str(HERE / "results"))
+    ap.add_argument("--log-json", action="store_true", help="also print each run's full result as one JSON line")
     args = ap.parse_args(argv)
 
     docs = [json.loads(line) for line in Path(args.corpus).read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -86,6 +87,13 @@ def main(argv: list[str] | None = None) -> int:
             path = out / f"{stack}__{slug(model)}.json"
             path.write_text(json.dumps(d, indent=2), encoding="utf-8")
             print(f"\r  score {d['hauditor_score']:.0f}/100 in {d['meta']['seconds']:.0f}s -> {path}", flush=True)
+            for r in report.results:
+                if r.outcome.value != "pass":
+                    ans = " ".join((r.result.record.answer if r.result else r.error or "").split())
+                    print(f"  {r.outcome.value.upper():<10} [{r.probe.id}] {r.reason}\n             {ans[:400]}")
+            if args.log_json:
+                # One line per run, so results can be recovered from CI logs alone.
+                print("RESULT_JSON " + json.dumps(d, separators=(",", ":")), flush=True)
     return 0
 
 

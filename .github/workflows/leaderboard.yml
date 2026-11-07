@@ -45,7 +45,7 @@ jobs:
           ollama pull "${{ matrix.model }}"
           ollama pull nomic-embed-text
       - name: Run the probes
-        run: python leaderboard/run.py --models "${{ matrix.model }}" --out results
+        run: python leaderboard/run.py --models "${{ matrix.model }}" --out results --log-json
       - uses: actions/upload-artifact@v4
         with:
           name: results-${{ strategy.job-index }}
