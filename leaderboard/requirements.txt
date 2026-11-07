@@ -1,0 +1,7 @@
+langchain-core==1.7.6
+langchain-ollama==1.1.0
+llama-index-core==0.14.25
+llama-index-llms-ollama==0.11.0
+llama-index-embeddings-ollama==0.10.0
+haystack-ai==3.4.1
+ollama-haystack==7.0.2
