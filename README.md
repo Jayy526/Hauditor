@@ -128,9 +128,9 @@ How often do popular RAG frameworks invent numbers when you build them the way t
 | Stack | Model | Score | Invented numbers |
 |---|---|---|---|
 | Haystack | llama3.2:3b | **98** | 9 (all in one pressured answer) |
+| Haystack | qwen2.5:3b | **94** | 3 |
 | LangChain | gemma3:4b | **92**\* | 3 |
 | Haystack | gemma3:4b | **91**\* | 3 |
-| Haystack | qwen2.5:3b | **91** | 4 |
 | LlamaIndex | qwen2.5:3b | **87** | 4 |
 | LlamaIndex | gemma3:4b | **86**\* | 1 |
 | LangChain | llama3.2:3b | **80** | 2 |

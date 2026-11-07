@@ -46,7 +46,9 @@ _YEAR_AFTER_RE = re.compile(
     re.IGNORECASE,
 )
 # ...and so does one that labels it just before: "2024: 1,410", "end of 2024 = X".
-_YEAR_BEFORE_RE = re.compile(r"((?:19|20)\d\d)\)?\s*[:=]\s*(?:[A-Za-z$\u20ac\u00a3]{1,3}\s?)?$")
+_YEAR_BEFORE_RE = re.compile(r"((?:19|20)\d\d)\)?[ \t]*:[ \t]*(?:[A-Za-z$\u20ac\u00a3]{1,3}[ \t]?)?$")
+# "1,410 (customers at year-end 2024)": a short note in brackets right after it.
+_YEAR_NOTE_RE = re.compile(r"[ \t]*\((?:[A-Za-z-]+[ \t]+){0,4}((?:19|20)\d\d)\)")
 
 # How much better another slot must fit before we call a number misaligned.
 MARGIN = 0.34
@@ -90,6 +92,9 @@ def _sentence(text: str, start: int, end: int) -> tuple[int, int]:
 
 def _bound_year(text: str, q: Quantity) -> tuple[str, int] | None:
     """The year grammatically attached to ``q`` and where it is, if there is one."""
+    m = _YEAR_NOTE_RE.match(text, q.end)
+    if m:
+        return m.group(1), m.start(1)
     m = _YEAR_AFTER_RE.match(text, q.end)
     if m and m.end() - q.end <= 40:
         return m.group(1), m.start(1)

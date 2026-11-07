@@ -1,6 +1,6 @@
 {
   "target": "haystack + qwen2.5:3b",
-  "hauditor_score": 90.6,
+  "hauditor_score": 93.9,
   "categories": {
     "lookup": {
       "pass": 5,
@@ -11,12 +11,12 @@
       "score": 100.0
     },
     "compute": {
-      "pass": 3,
-      "fail": 2,
+      "pass": 4,
+      "fail": 1,
       "abstain": 0,
       "unverified": 0,
       "error": 0,
-      "score": 60.0
+      "score": 80.0
     },
     "citation": {
       "pass": 5,
@@ -54,9 +54,9 @@
   "audit": {
     "answers": 35,
     "numbers_checked": 154,
-    "numbers_unsupported": 4,
-    "unsupported_number_rate": 0.025974025974025976,
-    "answers_with_unsupported_number": 3,
+    "numbers_unsupported": 3,
+    "unsupported_number_rate": 0.01948051948051948,
+    "answers_with_unsupported_number": 2,
     "citations_checked": 8,
     "citations_by_verdict": {
       "supported": 8,
@@ -66,8 +66,8 @@
     },
     "bad_citation_rate": 0.0,
     "answers_with_bad_citation": 0,
-    "answers_flagged": 3,
-    "answer_hallucination_rate": 0.08571428571428572
+    "answers_flagged": 2,
+    "answer_hallucination_rate": 0.05714285714285714
   },
   "probes": [
     {
@@ -893,8 +893,8 @@
         "answerable": true,
         "rationale": ""
       },
-      "outcome": "fail",
-      "reason": "unsupported number 1,410",
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
       "audit": {
         "id": "compute-4",
         "question": "How many freight software customers were added during 2025?",
@@ -1016,8 +1016,8 @@
               384,
               389
             ],
-            "verdict": "misaligned",
-            "evidence": "In the source, 1,930 fills this slot, not 1,410. The source gives 1,410 for 2024, not 2025.",
+            "verdict": "grounded",
+            "evidence": "\"1,410\"",
             "source_id": "p21"
           },
           {
@@ -1081,9 +1081,9 @@
             "source_id": "p21"
           }
         ],
-        "unsupported_number_rate": 0.06666666666666667,
+        "unsupported_number_rate": 0.0,
         "citations": [],
-        "hallucinated": true
+        "hallucinated": false
       },
       "context_ids": [
         "p21",
@@ -3174,6 +3174,8 @@
     "python": "3.12.16",
     "probes": 35,
     "seconds": 510.6,
-    "run_at": "2026-11-07T12:12:06+00:00"
+    "run_at": "2026-11-07T12:12:06+00:00",
+    "graded_with": "0.1.0",
+    "graded_at": "2026-11-07T12:30:10+00:00"
   }
 }

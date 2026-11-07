@@ -44,6 +44,9 @@ HONEST = [
     ("Refrigerated trucking revenue = NOK 5,980 million Total revenue = NOK 5,980 million + NOK 2,614 million "
     "+ NOK 818 million"),
     "1,930 (year-end 2025) - 1,410 (year-end 2024) = 520. Therefore, 520 freight software customers were added.",
+    ("To find out how many customers were added, we subtract the number at the end of 2024 from the number at "
+     "the end of 2025:\n\n1,930 (customers at year-end 2025) - 1,410 (customers at year-end 2024) = 520 customers "
+     "added during 2025."),
     "The customer base went from 1,410 to 1,930 between 2024 and 2025.",
     "Share = \\frac{5,980}{9,412} \\times 100",
     ("The dividend per share for fiscal 2025 is NOK 1.80, and for fiscal 2024 it was NOK 1.50.\n\n"
