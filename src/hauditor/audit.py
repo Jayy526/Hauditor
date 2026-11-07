@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .citations import MARKER_RE, CitationCheck, CitationChecker, CitationVerdict, Claim, extract_claims
-from .grounding import GroundingChecker, NumberCheck, Source, Verdict
+from .grounding import GroundingChecker, NumberCheck, Source
 
 
 @dataclass

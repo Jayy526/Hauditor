@@ -139,13 +139,13 @@ def check_alignment(answer: str, q: Quantity, source_text: str) -> Misalignment 
     if not own or not others:
         return None
     own_fit, own_q, own_sig = max(own, key=lambda t: t[0])
-    best_fit, best_q, best_sig = max(others, key=lambda t: t[0])
+    best_fit, best_q, _ = max(others, key=lambda t: t[0])
     if best_fit >= MIN_FIT and best_fit >= own_fit + MARGIN:
         where = ""
         if ans.years and own_sig.years and not (ans.years & own_sig.years):
             where = f" The source gives {own_q.raw} for {', '.join(sorted(own_sig.years))}, not {', '.join(sorted(ans.years))}."
         return Misalignment(
             best_q.raw,
-            f"in the source, {best_q.raw} fills this slot, not {q.raw}.{where}".strip(),
+            f"In the source, {best_q.raw} fills this slot, not {q.raw}.{where}".strip(),
         )
     return None
