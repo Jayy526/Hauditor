@@ -246,12 +246,15 @@ class CitationChecker:
 
         # Numbers first, deterministically, against the cited sources only.
         cited = [Source(s.id, s.text) for s in found]
-        bad = [n for n in self.numbers.check(claim.text, cited) if n.verdict == Verdict.UNSUPPORTED]
+        bad = [n for n in self.numbers.check(claim.text, cited) if n.verdict.is_bad]
         if bad:
             found_ids = {s.id for s in found}
             others = [Source(s.id, s.text) for s in sources if s.id not in found_ids]
             notes = []
             for n in bad:
+                if n.verdict == Verdict.MISALIGNED:
+                    notes.append(n.evidence)
+                    continue
                 elsewhere = [
                     m for m in self.numbers.check(n.quantity.raw, others) if m.verdict != Verdict.UNSUPPORTED
                 ] if others else []

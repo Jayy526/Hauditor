@@ -21,6 +21,8 @@ Honest variants (Hauditor should pass these)
     rounded_coarse        an integer rounded to two significant figures (3,150 -> 3,200)
     derived               adds a correct difference of two stated figures
     unit_words            "$812.4 million" -> "812.4 million dollars", "%" -> " percent"
+    reordered             the two periods restated in the other order, in new words
+    no_year               a figure restated without its year ("Net income was $61.8 million.")
 
 ``swapped_figures`` is the hard one: every number in the answer appears in the
 source and the wording matches, so neither the number check nor a lexical
@@ -47,7 +49,7 @@ HALLUCINATED = [
     "number_shift", "digit_swap", "scale_swap", "wrong_year",
     "fabricated_citation", "misattributed", "invented_claim", "wrong_math", "swapped_figures",
 ]
-HONEST = ["quote", "rounded", "rounded_coarse", "derived", "unit_words"]
+HONEST = ["quote", "rounded", "rounded_coarse", "derived", "unit_words", "reordered", "no_year"]
 
 _DIGITS = re.compile(r"\d[\d,]*(?:\.\d+)?|\.\d+")
 
@@ -256,6 +258,48 @@ def _unit_words(body, rng, ctx_text):
     return None
 
 
+_FIG = r"\$?\(?[\d][\d,]*(?:\.\d+)?\)?(?: (?:million|billion|thousand))?%?"
+_PERIOD_PAIR = re.compile(
+    r"^(?P<subj>[A-Z][^.]*?) (?:was|were|reached|totaled|rose to|grew to|fell to|improved to|of) "
+    rf"(?P<a>{_FIG}) (?:in|for) (?P<fa>fiscal )?(?P<ya>20\d\d),? "
+    r"(?:compared with|compared to|up from|down from|versus|from|an increase from) "
+    rf"(?P<b>{_FIG}) (?:in|for) (?P<fb>fiscal )?(?P<yb>20\d\d)"
+)
+
+
+def _reordered(body, rng, ctx_text):
+    m = _PERIOD_PAIR.search(body)
+    if not m:
+        return None
+    subj = m.group("subj")
+    # Lowercase a generic opening word ("Net income"), keep company names.
+    if not re.match(r"[A-Z][a-z]+ [A-Z]", subj):
+        subj = subj[0].lower() + subj[1:]
+    fa, fb = m.group("fa") or "", m.group("fb") or ""
+    text = (f"In {fb}{m.group('yb')}, {subj} stood at {m.group('b')}. "
+            f"By {fa}{m.group('ya')} it was {m.group('a')}.")
+    rest = body[m.end():].lstrip(" ,.")
+    if rest:
+        text += " " + rest[0].upper() + rest[1:]
+    return text, "periods restated in reverse order"
+
+
+def _no_year(body, rng, ctx_text):
+    years = [q for q in extract(body) if q.kind == Kind.YEAR]
+    if not years:
+        return None
+    # Keep only the first sentence, with its first year phrase removed.
+    first = re.split(r"(?<=[.!?])\s+", body)[0]
+    stripped = re.sub(r",? (?:in|for|during|at the end of|as of)(?: fiscal)? 20\d\d\b", "", first, count=1)
+    if stripped == first or not _figures(stripped):
+        return None
+    # Only safe when the sentence has one figure per year mentioned; otherwise the
+    # figure without its year is genuinely ambiguous.
+    if len([q for q in extract(stripped) if q.kind == Kind.YEAR]) > 0:
+        return None
+    return stripped, "year dropped"
+
+
 _EDITS = {
     "number_shift": _number_shift,
     "digit_swap": _digit_swap,
@@ -268,6 +312,8 @@ _EDITS = {
     "rounded_coarse": _rounded_coarse,
     "derived": _derived,
     "unit_words": _unit_words,
+    "reordered": _reordered,
+    "no_year": _no_year,
 }
 
 

@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .citations import MARKER_RE, CitationCheck, CitationChecker, CitationVerdict, Claim, extract_claims
-from .grounding import GroundingChecker, NumberCheck, Source, Verdict
+from .grounding import GroundingChecker, NumberCheck, Source
 
 
 @dataclass
@@ -54,7 +54,7 @@ class RecordResult:
 
     @property
     def unsupported(self) -> list[NumberCheck]:
-        return [n for n in self.numbers if n.verdict == Verdict.UNSUPPORTED]
+        return [n for n in self.numbers if n.verdict.is_bad]
 
     @property
     def bad_citations(self) -> list[CitationCheck]:
