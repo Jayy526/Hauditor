@@ -31,7 +31,7 @@ article h2 { font-size:14px; margin:0 0 6px; color:var(--muted); font-weight:600
 mark { border-radius:3px; padding:0 2px; color:inherit; }
 mark.grounded { background:var(--ok-bg); }
 mark.derived { background:var(--warn-bg); }
-mark.unsupported { background:var(--bad-bg); outline:1px solid var(--bad); }
+mark.unsupported, mark.misaligned { background:var(--bad-bg); outline:1px solid var(--bad); }
 table { width:100%; border-collapse:collapse; font-size:13px; }
 td { border-top:1px solid var(--line); padding:5px 6px; vertical-align:top; }
 td.v-grounded, td.v-supported { color:var(--ok); }
@@ -43,7 +43,7 @@ h3 { font-size:13px; margin:12px 0 4px; color:var(--muted); font-weight:600; }
 .o-abstain, .o-unverified { background:var(--warn-bg); color:var(--warn); }
 .cat { font-size:12px; color:var(--muted); font-weight:400; margin-left:4px; }
 table.cats { margin-bottom:24px; }
-td.v-grounded { color:var(--ok); } td.v-derived { color:var(--warn); } td.v-unsupported { color:var(--bad); font-weight:600; }
+td.v-grounded { color:var(--ok); } td.v-derived { color:var(--warn); } td.v-unsupported, td.v-misaligned { color:var(--bad); font-weight:600; }
 """
 
 

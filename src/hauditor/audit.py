@@ -54,7 +54,7 @@ class RecordResult:
 
     @property
     def unsupported(self) -> list[NumberCheck]:
-        return [n for n in self.numbers if n.verdict == Verdict.UNSUPPORTED]
+        return [n for n in self.numbers if n.verdict.is_bad]
 
     @property
     def bad_citations(self) -> list[CitationCheck]:
