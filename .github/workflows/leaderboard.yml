@@ -1,0 +1,92 @@
+name: leaderboard
+
+# Runs the Hauditor probe set against popular RAG frameworks with open models
+# served by Ollama, then publishes the results page to GitHub Pages.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 1 * *" # monthly, to track new framework releases
+  pull_request:
+    paths: ["leaderboard/**", ".github/workflows/leaderboard.yml"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: leaderboard-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy:
+      fail-fast: false
+      matrix:
+        model: ["llama3.2:3b", "qwen2.5:3b", "gemma3:4b"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Hauditor and the RAG frameworks
+        run: pip install -e . -r leaderboard/requirements.txt
+      - name: Cache Ollama models
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama/models
+          key: ollama-${{ matrix.model }}-nomic-embed-text
+      - name: Start Ollama and pull models
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          sudo systemctl stop ollama || true
+          OLLAMA_MODELS=$HOME/.ollama/models nohup ollama serve > ollama.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:11434/api/version && break; sleep 1; done
+          ollama pull "${{ matrix.model }}"
+          ollama pull nomic-embed-text
+      - name: Run the probes
+        run: python leaderboard/run.py --models "${{ matrix.model }}" --out results
+      - uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ strategy.job-index }}
+          path: results/*.json
+
+  site:
+    needs: run
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: results-*
+          path: results
+          merge-multiple: true
+      - name: Build the page
+        run: |
+          python leaderboard/build_site.py --results results --out site
+          cat site/leaderboard.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - uses: actions/upload-artifact@v4
+        with:
+          name: leaderboard
+          path: site
+
+  deploy:
+    needs: site
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -121,6 +121,10 @@ That covers shifted, transposed and rescaled figures, wrong years, invented clai
 hauditor bench benchmarks/corpus_heldout2.jsonl --show-misses
 ```
 
+## Leaderboard
+
+How often do popular RAG frameworks invent numbers when you build them the way their own tutorials do? The [leaderboard](https://jayy526.github.io/Hauditor/) runs LangChain, LlamaIndex and Haystack on the same fictional annual report, with the same open models, and scores each one with live mode. See [leaderboard/](leaderboard/README.md) for how it's run.
+
 ## Install and run
 
 ```bash
@@ -167,7 +171,7 @@ Live mode spots refusals and premise corrections with a phrase list ("the docume
 - [x] Benchmark with planted hallucinations to measure Hauditor's own precision and recall
 - [x] Catch swapped figures by tying each number to its period and metric
 - [ ] Add real SEC 10-K passages to the benchmark
-- [ ] Public leaderboard: live mode run against common RAG stacks and models
+- [x] Public leaderboard: live mode run against common RAG stacks and models
 
 ## License
 
