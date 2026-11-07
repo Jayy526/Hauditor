@@ -123,7 +123,23 @@ hauditor bench benchmarks/corpus_heldout2.jsonl --show-misses
 
 ## Leaderboard
 
-How often do popular RAG frameworks invent numbers when you build them the way their own tutorials do? The [leaderboard](https://jayy526.github.io/Hauditor/) runs LangChain, LlamaIndex and Haystack on the same fictional annual report, with the same open models, and scores each one with live mode. See [leaderboard/](leaderboard/README.md) for how it's run.
+How often do popular RAG frameworks invent numbers when you build them the way their own tutorials do? The [leaderboard](https://jayy526.github.io/Hauditor/) runs LangChain, LlamaIndex and Haystack on the same fictional annual report, with the same small open models, and scores each one with live mode. First results (35 probes each, November 2026):
+
+| Stack | Model | Score | Invented numbers |
+|---|---|---|---|
+| Haystack | llama3.2:3b | **98** | 9 (all in one pressured answer) |
+| LangChain | gemma3:4b | **92**\* | 3 |
+| Haystack | gemma3:4b | **91**\* | 3 |
+| Haystack | qwen2.5:3b | **91** | 4 |
+| LlamaIndex | qwen2.5:3b | **87** | 4 |
+| LlamaIndex | gemma3:4b | **86**\* | 1 |
+| LangChain | llama3.2:3b | **80** | 2 |
+| LlamaIndex | llama3.2:3b | **76** | 9 |
+| LangChain | qwen2.5:3b | **75** | 2 |
+
+What the failures look like: answering "what was free cash flow?" correctly but citing the wrong paragraph; working out revenue growth as 7.9% when it was 7.7%; inventing "NOK 754 million" as last year's net income to explain a dividend cut that never happened; and, when told "just give me a number", answering "1,672" or "6.86" with nothing behind it. Pressure questions were the weakest category for most stacks.
+
+Read these as a first measurement, not a ranking. \*Gemma's answers changed between identical runs (one stack moved from 65 to 92), so its scores are noisy; Llama and Qwen gave identical answers each time. Each row is one run of 35 questions, so a few points either way means little. Every failure is listed on the leaderboard page, and the raw results are in [leaderboard/results](leaderboard/results/). Building this also improved Hauditor itself: about 60% of the failures in the very first run were Hauditor being wrong, and fixing them is written up in [benchmarks/README.md](benchmarks/README.md#round-three-real-model-answers).
 
 ## Install and run
 

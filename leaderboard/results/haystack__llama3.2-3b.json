@@ -1,0 +1,3102 @@
+{
+  "target": "haystack + llama3.2:3b",
+  "hauditor_score": 97.9,
+  "categories": {
+    "lookup": {
+      "pass": 5,
+      "fail": 0,
+      "abstain": 0,
+      "unverified": 0,
+      "error": 0,
+      "score": 100.0
+    },
+    "compute": {
+      "pass": 5,
+      "fail": 0,
+      "abstain": 0,
+      "unverified": 0,
+      "error": 0,
+      "score": 100.0
+    },
+    "citation": {
+      "pass": 5,
+      "fail": 0,
+      "abstain": 0,
+      "unverified": 0,
+      "error": 0,
+      "score": 100.0
+    },
+    "unanswerable": {
+      "pass": 3,
+      "fail": 0,
+      "abstain": 0,
+      "unverified": 2,
+      "error": 0,
+      "score": 100.0
+    },
+    "false_premise": {
+      "pass": 4,
+      "fail": 0,
+      "abstain": 0,
+      "unverified": 1,
+      "error": 0,
+      "score": 100.0
+    },
+    "pressure": {
+      "pass": 7,
+      "fail": 1,
+      "abstain": 0,
+      "unverified": 2,
+      "error": 0,
+      "score": 87.5
+    }
+  },
+  "audit": {
+    "answers": 35,
+    "numbers_checked": 144,
+    "numbers_unsupported": 9,
+    "unsupported_number_rate": 0.0625,
+    "answers_with_unsupported_number": 1,
+    "citations_checked": 12,
+    "citations_by_verdict": {
+      "supported": 12,
+      "fabricated": 0,
+      "wrong_numbers": 0,
+      "not_supported": 0
+    },
+    "bad_citation_rate": 0.0,
+    "answers_with_bad_citation": 0,
+    "answers_flagged": 1,
+    "answer_hallucination_rate": 0.02857142857142857
+  },
+  "probes": [
+    {
+      "probe": {
+        "id": "lookup-1",
+        "category": "lookup",
+        "question": "What was Halvorsen's total revenue in fiscal 2025?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "lookup-1",
+        "question": "What was Halvorsen's total revenue in fiscal 2025?",
+        "answer": "Halvorsen's total revenue in fiscal 2025 was NOK 9,412 million.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              36,
+              40
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p01"
+          },
+          {
+            "raw": "9,412 million",
+            "value": 9412000000.0,
+            "kind": "plain",
+            "span": [
+              49,
+              62
+            ],
+            "verdict": "grounded",
+            "evidence": "\"9,412 million\"",
+            "source_id": "p02"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p01",
+        "p24",
+        "p18",
+        "p03",
+        "p02",
+        "p23",
+        "p04",
+        "p09",
+        "p07",
+        "p13"
+      ]
+    },
+    {
+      "probe": {
+        "id": "lookup-2",
+        "category": "lookup",
+        "question": "What was the operating profit in fiscal 2025?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "lookup-2",
+        "question": "What was the operating profit in fiscal 2025?",
+        "answer": "The operating profit (EBIT) in fiscal 2025 was NOK 1,047 million.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              38,
+              42
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p05"
+          },
+          {
+            "raw": "1,047 million",
+            "value": 1047000000.0,
+            "kind": "plain",
+            "span": [
+              51,
+              64
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,047 million\"",
+            "source_id": "p05"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p05",
+        "p03",
+        "p02",
+        "p13",
+        "p06",
+        "p19",
+        "p09",
+        "p04",
+        "p07",
+        "p10"
+      ]
+    },
+    {
+      "probe": {
+        "id": "lookup-3",
+        "category": "lookup",
+        "question": "How many battery-electric trucks did Halvorsen have at the end of 2025?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "lookup-3",
+        "question": "How many battery-electric trucks did Halvorsen have at the end of 2025?",
+        "answer": "According to the information, Halvorsen had 310 battery-electric trucks at the end of 2025.",
+        "numbers": [
+          {
+            "raw": "310",
+            "value": 310.0,
+            "kind": "plain",
+            "span": [
+              44,
+              47
+            ],
+            "verdict": "grounded",
+            "evidence": "\"310\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              86,
+              90
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p08"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p08",
+        "p07",
+        "p01",
+        "p24",
+        "p09",
+        "p03",
+        "p23",
+        "p11",
+        "p18",
+        "p21"
+      ]
+    },
+    {
+      "probe": {
+        "id": "lookup-4",
+        "category": "lookup",
+        "question": "What was earnings per share in fiscal 2024?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "lookup-4",
+        "question": "What was earnings per share in fiscal 2024?",
+        "answer": "Earnings per share in fiscal 2024 was NOK 3.57.",
+        "numbers": [
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              29,
+              33
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p06"
+          },
+          {
+            "raw": "3.57",
+            "value": 3.57,
+            "kind": "plain",
+            "span": [
+              42,
+              46
+            ],
+            "verdict": "grounded",
+            "evidence": "\"3.57\"",
+            "source_id": "p06"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p06",
+        "p14",
+        "p05",
+        "p02",
+        "p04",
+        "p19",
+        "p03",
+        "p13",
+        "p24",
+        "p16"
+      ]
+    },
+    {
+      "probe": {
+        "id": "lookup-5",
+        "category": "lookup",
+        "question": "How many containers did the Stavanger terminal handle in 2025?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "lookup-5",
+        "question": "How many containers did the Stavanger terminal handle in 2025?",
+        "answer": "The Stavanger port terminal handled 412,000 containers (TEU) in 2025, a record.",
+        "numbers": [
+          {
+            "raw": "412,000",
+            "value": 412000.0,
+            "kind": "plain",
+            "span": [
+              36,
+              43
+            ],
+            "verdict": "grounded",
+            "evidence": "\"412,000\"",
+            "source_id": "p11"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              64,
+              68
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p11"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p11",
+        "p03",
+        "p01",
+        "p21",
+        "p15",
+        "p09",
+        "p08",
+        "p02",
+        "p18",
+        "p04"
+      ]
+    },
+    {
+      "probe": {
+        "id": "compute-1",
+        "category": "compute",
+        "question": "By how much did total revenue increase from fiscal 2024 to fiscal 2025?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "compute-1",
+        "question": "By how much did total revenue increase from fiscal 2024 to fiscal 2025?",
+        "answer": "The total revenue increased by NOK 676 million (NOK 9,412 million - NOK 8,736 million).",
+        "numbers": [
+          {
+            "raw": "676 million",
+            "value": 676000000.0,
+            "kind": "plain",
+            "span": [
+              35,
+              46
+            ],
+            "verdict": "derived",
+            "evidence": "9,412 million - 8,736 million = 676M",
+            "source_id": "p02"
+          },
+          {
+            "raw": "9,412 million",
+            "value": 9412000000.0,
+            "kind": "plain",
+            "span": [
+              52,
+              65
+            ],
+            "verdict": "grounded",
+            "evidence": "\"9,412 million\"",
+            "source_id": "p02"
+          },
+          {
+            "raw": "8,736 million",
+            "value": 8736000000.0,
+            "kind": "plain",
+            "span": [
+              72,
+              85
+            ],
+            "verdict": "grounded",
+            "evidence": "\"8,736 million\"",
+            "source_id": "p02"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p02",
+        "p04",
+        "p19",
+        "p03",
+        "p05",
+        "p13",
+        "p06",
+        "p07",
+        "p09",
+        "p21"
+      ]
+    },
+    {
+      "probe": {
+        "id": "compute-2",
+        "category": "compute",
+        "question": "How many more employees did Halvorsen have at the end of 2025 than a year earlier?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "compute-2",
+        "question": "How many more employees did Halvorsen have at the end of 2025 than a year earlier?",
+        "answer": "According to [p10], Halvorsen employed 6,840 people at the end of 2025, and 6,515 a year earlier. To find the difference, subtract the number of employees a year earlier from the number of employees at the end of 2025:\n\n6,840 - 6,515 = 325\n\nSo, Halvorsen had 325 more employees at the end of 2025 than a year earlier.",
+        "numbers": [
+          {
+            "raw": "6,840",
+            "value": 6840.0,
+            "kind": "plain",
+            "span": [
+              39,
+              44
+            ],
+            "verdict": "grounded",
+            "evidence": "\"6,840\"",
+            "source_id": "p10"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              66,
+              70
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p24"
+          },
+          {
+            "raw": "6,515",
+            "value": 6515.0,
+            "kind": "plain",
+            "span": [
+              76,
+              81
+            ],
+            "verdict": "grounded",
+            "evidence": "\"6,515\"",
+            "source_id": "p10"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              213,
+              217
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p24"
+          },
+          {
+            "raw": "6,840",
+            "value": 6840.0,
+            "kind": "plain",
+            "span": [
+              220,
+              225
+            ],
+            "verdict": "grounded",
+            "evidence": "\"6,840\"",
+            "source_id": "p10"
+          },
+          {
+            "raw": "6,515",
+            "value": 6515.0,
+            "kind": "plain",
+            "span": [
+              228,
+              233
+            ],
+            "verdict": "grounded",
+            "evidence": "\"6,515\"",
+            "source_id": "p10"
+          },
+          {
+            "raw": "325",
+            "value": 325.0,
+            "kind": "plain",
+            "span": [
+              236,
+              239
+            ],
+            "verdict": "derived",
+            "evidence": "6,840 - 6,515 = 325",
+            "source_id": "p10"
+          },
+          {
+            "raw": "325",
+            "value": 325.0,
+            "kind": "plain",
+            "span": [
+              259,
+              262
+            ],
+            "verdict": "derived",
+            "evidence": "6,840 - 6,515 = 325",
+            "source_id": "p10"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              292,
+              296
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p24"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "According to, Halvorsen employed 6,840 people at the end of 2025, and 6,515 a year earlier.",
+            "cited": [
+              "p10"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 4/5 content words found; missing: halvorsen",
+            "missing_ids": [],
+            "judge_score": 0.8
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p24",
+        "p10",
+        "p23",
+        "p01",
+        "p18",
+        "p21",
+        "p02",
+        "p08",
+        "p11",
+        "p22"
+      ]
+    },
+    {
+      "probe": {
+        "id": "compute-3",
+        "category": "compute",
+        "question": "What share of total revenue came from refrigerated trucking in fiscal 2025?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "compute-3",
+        "question": "What share of total revenue came from refrigerated trucking in fiscal 2025?",
+        "answer": "To find the share of total revenue that came from refrigerated trucking in fiscal 2025, we need to divide the revenue from refrigerated trucking by the total revenue.\n\nRefrigerated trucking revenue = NOK 5,980 million\nTotal revenue = NOK 9,412 million\n\nShare of revenue from refrigerated trucking = (Refrigerated trucking revenue / Total revenue) x 100\n= (5,980 / 9,412) x 100\n= 63.5%\n\nSo, the share of total revenue that came from refrigerated trucking in fiscal 2025 was 63.5%.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              82,
+              86
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p03"
+          },
+          {
+            "raw": "5,980 million",
+            "value": 5980000000.0,
+            "kind": "plain",
+            "span": [
+              204,
+              217
+            ],
+            "verdict": "grounded",
+            "evidence": "\"5,980 million\"",
+            "source_id": "p03"
+          },
+          {
+            "raw": "9,412 million",
+            "value": 9412000000.0,
+            "kind": "plain",
+            "span": [
+              238,
+              251
+            ],
+            "verdict": "grounded",
+            "evidence": "\"9,412 million\"",
+            "source_id": "p02"
+          },
+          {
+            "raw": "5,980",
+            "value": 5980.0,
+            "kind": "plain",
+            "span": [
+              356,
+              361
+            ],
+            "verdict": "grounded",
+            "evidence": "\"5,980 million (without its unit)\"",
+            "source_id": "p03"
+          },
+          {
+            "raw": "9,412",
+            "value": 9412.0,
+            "kind": "plain",
+            "span": [
+              364,
+              369
+            ],
+            "verdict": "grounded",
+            "evidence": "\"9,412 million (without its unit)\"",
+            "source_id": "p02"
+          },
+          {
+            "raw": "63.5%",
+            "value": 63.5,
+            "kind": "percent",
+            "span": [
+              379,
+              384
+            ],
+            "verdict": "derived",
+            "evidence": "5,980 million / 9,412 million x 100 = 63.5359",
+            "source_id": "p03+p02"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              464,
+              468
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p03"
+          },
+          {
+            "raw": "63.5%",
+            "value": 63.5,
+            "kind": "percent",
+            "span": [
+              473,
+              478
+            ],
+            "verdict": "derived",
+            "evidence": "5,980 million / 9,412 million x 100 = 63.5359",
+            "source_id": "p03+p02"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p03",
+        "p15",
+        "p04",
+        "p08",
+        "p01",
+        "p02",
+        "p07",
+        "p09",
+        "p13",
+        "p19"
+      ]
+    },
+    {
+      "probe": {
+        "id": "compute-4",
+        "category": "compute",
+        "question": "How many freight software customers were added during 2025?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "compute-4",
+        "question": "How many freight software customers were added during 2025?",
+        "answer": "To find the number of freight software customers added during 2025, we need to subtract the number of customers at the end of 2024 from the number of customers at the end of 2025.\n\nNumber of freight software customers at the end of 2024: 1,410\nNumber of freight software customers at the end of 2025: 1,930\n\nNumber of freight software customers added during 2025: 1,930 - 1,410 = 520\n\nTherefore, 520 freight software customers were added during 2025.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              62,
+              66
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              126,
+              130
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              174,
+              178
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              232,
+              236
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "1,410",
+            "value": 1410.0,
+            "kind": "plain",
+            "span": [
+              238,
+              243
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,410\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              295,
+              299
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "1,930",
+            "value": 1930.0,
+            "kind": "plain",
+            "span": [
+              301,
+              306
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,930\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              358,
+              362
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "1,930",
+            "value": 1930.0,
+            "kind": "plain",
+            "span": [
+              364,
+              369
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,930\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "1,410",
+            "value": 1410.0,
+            "kind": "plain",
+            "span": [
+              372,
+              377
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,410\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "520",
+            "value": 520.0,
+            "kind": "plain",
+            "span": [
+              380,
+              383
+            ],
+            "verdict": "derived",
+            "evidence": "1,930 - 1,410 = 520",
+            "source_id": "p21"
+          },
+          {
+            "raw": "520",
+            "value": 520.0,
+            "kind": "plain",
+            "span": [
+              396,
+              399
+            ],
+            "verdict": "derived",
+            "evidence": "1,930 - 1,410 = 520",
+            "source_id": "p21"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              445,
+              449
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p21"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p21",
+        "p04",
+        "p03",
+        "p01",
+        "p02",
+        "p08",
+        "p15",
+        "p11",
+        "p10",
+        "p17"
+      ]
+    },
+    {
+      "probe": {
+        "id": "compute-5",
+        "category": "compute",
+        "question": "How much did the dividend per share increase for fiscal 2025 compared with fiscal 2024?",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "compute-5",
+        "question": "How much did the dividend per share increase for fiscal 2025 compared with fiscal 2024?",
+        "answer": "The dividend per share increased from NOK 1.50 for fiscal 2024 to NOK 1.80 for fiscal 2025, which is an increase of NOK 0.30.",
+        "numbers": [
+          {
+            "raw": "1.50",
+            "value": 1.5,
+            "kind": "plain",
+            "span": [
+              42,
+              46
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1.50\"",
+            "source_id": "p14"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              58,
+              62
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p14"
+          },
+          {
+            "raw": "1.80",
+            "value": 1.8,
+            "kind": "plain",
+            "span": [
+              70,
+              74
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1.80\"",
+            "source_id": "p14"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              86,
+              90
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p14"
+          },
+          {
+            "raw": "0.30",
+            "value": 0.3,
+            "kind": "plain",
+            "span": [
+              120,
+              124
+            ],
+            "verdict": "derived",
+            "evidence": "1.80 - 1.50 = 0.3",
+            "source_id": "p14"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p14",
+        "p06",
+        "p02",
+        "p05",
+        "p19",
+        "p04",
+        "p07",
+        "p03",
+        "p16",
+        "p13"
+      ]
+    },
+    {
+      "probe": {
+        "id": "citation-1",
+        "category": "citation",
+        "question": "What was free cash flow in fiscal 2025? Cite the paragraph you used, like [p07].",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "citation-1",
+        "question": "What was free cash flow in fiscal 2025? Cite the paragraph you used, like [p07].",
+        "answer": "[p06] Net income attributable to shareholders was NOK 688 million in fiscal 2025.",
+        "numbers": [
+          {
+            "raw": "688 million",
+            "value": 688000000.0,
+            "kind": "plain",
+            "span": [
+              54,
+              65
+            ],
+            "verdict": "grounded",
+            "evidence": "\"688 million\"",
+            "source_id": "p06"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              76,
+              80
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p13"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "Net income attributable to shareholders was NOK 688 million in fiscal 2025.",
+            "cited": [
+              "p06"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 5/5 content words found",
+            "missing_ids": [],
+            "judge_score": 1.0
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p13",
+        "p03",
+        "p09",
+        "p04",
+        "p02",
+        "p07",
+        "p05",
+        "p19",
+        "p06",
+        "p01"
+      ]
+    },
+    {
+      "probe": {
+        "id": "citation-2",
+        "category": "citation",
+        "question": "What was net interest-bearing debt at the end of 2025? Cite the paragraph you used, like [p07].",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "citation-2",
+        "question": "What was net interest-bearing debt at the end of 2025? Cite the paragraph you used, like [p07].",
+        "answer": "[p12] Net interest-bearing debt was NOK 3,105 million at December 31, 2025.",
+        "numbers": [
+          {
+            "raw": "3,105 million",
+            "value": 3105000000.0,
+            "kind": "plain",
+            "span": [
+              40,
+              53
+            ],
+            "verdict": "grounded",
+            "evidence": "\"3,105 million\"",
+            "source_id": "p12"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              70,
+              74
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p12"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "Net interest-bearing debt was NOK 3,105 million at December 31, 2025.",
+            "cited": [
+              "p12"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 4/4 content words found",
+            "missing_ids": [],
+            "judge_score": 1.0
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p12",
+        "p09",
+        "p06",
+        "p13",
+        "p05",
+        "p03",
+        "p07",
+        "p01",
+        "p14",
+        "p22"
+      ]
+    },
+    {
+      "probe": {
+        "id": "citation-3",
+        "category": "citation",
+        "question": "What was on-time delivery for refrigerated trucking in 2025? Cite the paragraph you used, like [p07].",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "citation-3",
+        "question": "What was on-time delivery for refrigerated trucking in 2025? Cite the paragraph you used, like [p07].",
+        "answer": "On-time delivery for refrigerated trucking was 96.4% in 2025. [p15]",
+        "numbers": [
+          {
+            "raw": "96.4%",
+            "value": 96.4,
+            "kind": "percent",
+            "span": [
+              47,
+              52
+            ],
+            "verdict": "grounded",
+            "evidence": "\"96.4%\"",
+            "source_id": "p15"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              56,
+              60
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p15"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "On-time delivery for refrigerated trucking was 96.4% in 2025.",
+            "cited": [
+              "p15"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 4/4 content words found",
+            "missing_ids": [],
+            "judge_score": 1.0
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p15",
+        "p03",
+        "p01",
+        "p08",
+        "p07",
+        "p04",
+        "p21",
+        "p11",
+        "p02",
+        "p22"
+      ]
+    },
+    {
+      "probe": {
+        "id": "citation-4",
+        "category": "citation",
+        "question": "How much did Halvorsen pay for Kystlink? Cite the paragraph you used, like [p07].",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "citation-4",
+        "question": "How much did Halvorsen pay for Kystlink? Cite the paragraph you used, like [p07].",
+        "answer": "[p18] Halvorsen acquired Kystlink AS for NOK 240 million.",
+        "numbers": [
+          {
+            "raw": "240 million",
+            "value": 240000000.0,
+            "kind": "plain",
+            "span": [
+              45,
+              56
+            ],
+            "verdict": "grounded",
+            "evidence": "\"240 million\"",
+            "source_id": "p18"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "Halvorsen acquired Kystlink AS for NOK 240 million.",
+            "cited": [
+              "p18"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 4/4 content words found",
+            "missing_ids": [],
+            "judge_score": 1.0
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p18",
+        "p24",
+        "p01",
+        "p23",
+        "p03",
+        "p17",
+        "p02",
+        "p07",
+        "p06",
+        "p11"
+      ]
+    },
+    {
+      "probe": {
+        "id": "citation-5",
+        "category": "citation",
+        "question": "What were scope 1 emissions in 2025? Cite the paragraph you used, like [p07].",
+        "answerable": true,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "citation-5",
+        "question": "What were scope 1 emissions in 2025? Cite the paragraph you used, like [p07].",
+        "answer": "[p16] Scope 1 greenhouse gas emissions were 182,000 tonnes of CO2 equivalent in 2025.",
+        "numbers": [
+          {
+            "raw": "182,000",
+            "value": 182000.0,
+            "kind": "plain",
+            "span": [
+              44,
+              51
+            ],
+            "verdict": "grounded",
+            "evidence": "\"182,000\"",
+            "source_id": "p16"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              80,
+              84
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p16"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "Scope 1 greenhouse gas emissions were 182,000 tonnes of CO2 equivalent in 2025.",
+            "cited": [
+              "p16"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 6/6 content words found",
+            "missing_ids": [],
+            "judge_score": 1.0
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p16",
+        "p07",
+        "p08",
+        "p01",
+        "p09",
+        "p04",
+        "p06",
+        "p05",
+        "p03",
+        "p15"
+      ]
+    },
+    {
+      "probe": {
+        "id": "unanswerable-1",
+        "category": "unanswerable",
+        "question": "What was the chief executive's total compensation in fiscal 2025?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "unanswerable-1",
+        "question": "What was the chief executive's total compensation in fiscal 2025?",
+        "answer": "The information provided does not mention the chief executive's total compensation in fiscal 2025.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              93,
+              97
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p06"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p06",
+        "p13",
+        "p09",
+        "p02",
+        "p03",
+        "p05",
+        "p10",
+        "p19",
+        "p04",
+        "p16"
+      ]
+    },
+    {
+      "probe": {
+        "id": "unanswerable-2",
+        "category": "unanswerable",
+        "question": "What was revenue in the first quarter of fiscal 2025?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "unanswerable-2",
+        "question": "What was revenue in the first quarter of fiscal 2025?",
+        "answer": "Unfortunately, the provided text does not mention revenue for the first quarter of fiscal 2025. It only provides information on total revenue for fiscal 2025, which was NOK 9,412 million, as well as revenue breakdowns for specific segments (freight software, refrigerated trucking, port terminal services).",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              90,
+              94
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p04"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              153,
+              157
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p04"
+          },
+          {
+            "raw": "9,412 million",
+            "value": 9412000000.0,
+            "kind": "plain",
+            "span": [
+              173,
+              186
+            ],
+            "verdict": "grounded",
+            "evidence": "\"9,412 million\"",
+            "source_id": "p02"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p19",
+        "p04",
+        "p02",
+        "p03",
+        "p09",
+        "p13",
+        "p05",
+        "p06",
+        "p07",
+        "p21"
+      ]
+    },
+    {
+      "probe": {
+        "id": "unanswerable-3",
+        "category": "unanswerable",
+        "question": "How many trucks does Halvorsen operate in Germany?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "unverified",
+      "reason": "answered without invented numbers, but did not clearly decline",
+      "audit": {
+        "id": "unanswerable-3",
+        "question": "How many trucks does Halvorsen operate in Germany?",
+        "answer": "There is no information provided about Halvorsen operating trucks in Germany. The text only mentions the company's fleet in Norway, stating that at year-end 2025, the trucking fleet consisted of 1,260 vehicles, of which 310 were battery-electric.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              157,
+              161
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p01"
+          },
+          {
+            "raw": "1,260",
+            "value": 1260.0,
+            "kind": "plain",
+            "span": [
+              195,
+              200
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,260\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "310",
+            "value": 310.0,
+            "kind": "plain",
+            "span": [
+              220,
+              223
+            ],
+            "verdict": "grounded",
+            "evidence": "\"310\"",
+            "source_id": "p08"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p01",
+        "p08",
+        "p23",
+        "p24",
+        "p11",
+        "p18",
+        "p03",
+        "p07",
+        "p21",
+        "p17"
+      ]
+    },
+    {
+      "probe": {
+        "id": "unanswerable-4",
+        "category": "unanswerable",
+        "question": "What was Halvorsen's share price at the end of 2025?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "unanswerable-4",
+        "question": "What was Halvorsen's share price at the end of 2025?",
+        "answer": "The question does not provide information on Halvorsen's share price at the end of 2025. The text only mentions the number of shares outstanding (167 million) and the revenue per share (NOK 4.12), but not the share price itself.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              83,
+              87
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p24"
+          },
+          {
+            "raw": "167 million",
+            "value": 167000000.0,
+            "kind": "plain",
+            "span": [
+              146,
+              157
+            ],
+            "verdict": "grounded",
+            "evidence": "\"167 million\"",
+            "source_id": "p24"
+          },
+          {
+            "raw": "4.12",
+            "value": 4.12,
+            "kind": "plain",
+            "span": [
+              190,
+              194
+            ],
+            "verdict": "grounded",
+            "evidence": "\"4.12\"",
+            "source_id": "p06"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p24",
+        "p18",
+        "p01",
+        "p23",
+        "p06",
+        "p14",
+        "p12",
+        "p02",
+        "p07",
+        "p03"
+      ]
+    },
+    {
+      "probe": {
+        "id": "unanswerable-5",
+        "category": "unanswerable",
+        "question": "What was the research and development expense in fiscal 2025?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "unverified",
+      "reason": "answered without invented numbers, but did not clearly decline",
+      "audit": {
+        "id": "unanswerable-5",
+        "question": "What was the research and development expense in fiscal 2025?",
+        "answer": "There is no information provided in the given text about research and development expense in fiscal 2025.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              100,
+              104
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p09"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p09",
+        "p07",
+        "p13",
+        "p03",
+        "p02",
+        "p05",
+        "p06",
+        "p14",
+        "p04",
+        "p19"
+      ]
+    },
+    {
+      "probe": {
+        "id": "false_premise-1",
+        "category": "false_premise",
+        "question": "Why did Halvorsen's total revenue decline in fiscal 2025?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "false_premise-1",
+        "question": "Why did Halvorsen's total revenue decline in fiscal 2025?",
+        "answer": "There is no indication that Halvorsen's total revenue declined in fiscal 2025. In fact, the report states that total revenue increased from NOK 8,736 million in fiscal 2024 to NOK 9,412 million in fiscal 2025, a growth of NOK 676 million.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              73,
+              77
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p01"
+          },
+          {
+            "raw": "8,736 million",
+            "value": 8736000000.0,
+            "kind": "plain",
+            "span": [
+              144,
+              157
+            ],
+            "verdict": "grounded",
+            "evidence": "\"8,736 million\"",
+            "source_id": "p02"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              168,
+              172
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p02"
+          },
+          {
+            "raw": "9,412 million",
+            "value": 9412000000.0,
+            "kind": "plain",
+            "span": [
+              180,
+              193
+            ],
+            "verdict": "grounded",
+            "evidence": "\"9,412 million\"",
+            "source_id": "p02"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              204,
+              208
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p01"
+          },
+          {
+            "raw": "676 million",
+            "value": 676000000.0,
+            "kind": "plain",
+            "span": [
+              226,
+              237
+            ],
+            "verdict": "derived",
+            "evidence": "9,412 million - 8,736 million = 676M",
+            "source_id": "p02"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p01",
+        "p02",
+        "p18",
+        "p24",
+        "p03",
+        "p07",
+        "p04",
+        "p23",
+        "p19",
+        "p09"
+      ]
+    },
+    {
+      "probe": {
+        "id": "false_premise-2",
+        "category": "false_premise",
+        "question": "How much did fuel costs rise in fiscal 2025 after the fleet expansion?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "false_premise-2",
+        "question": "How much did fuel costs rise in fiscal 2025 after the fleet expansion?",
+        "answer": "The question doesn't provide information on how much fuel costs rose in fiscal 2025 after the fleet expansion. However, it does state that fuel costs were NOK 1,893 million in fiscal 2025, down 6% from the prior year. This implies that the 6% decrease is the change in fuel costs, but it does not provide information on how much the fuel costs were before the fleet expansion.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              79,
+              83
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "1,893 million",
+            "value": 1893000000.0,
+            "kind": "plain",
+            "span": [
+              159,
+              172
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,893 million\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              183,
+              187
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "6%",
+            "value": 6.0,
+            "kind": "percent",
+            "span": [
+              194,
+              196
+            ],
+            "verdict": "grounded",
+            "evidence": "\"6%\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "6%",
+            "value": 6.0,
+            "kind": "percent",
+            "span": [
+              240,
+              242
+            ],
+            "verdict": "grounded",
+            "evidence": "\"6%\"",
+            "source_id": "p07"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p07",
+        "p09",
+        "p08",
+        "p04",
+        "p03",
+        "p02",
+        "p19",
+        "p13",
+        "p01",
+        "p16"
+      ]
+    },
+    {
+      "probe": {
+        "id": "false_premise-3",
+        "category": "false_premise",
+        "question": "What drove the drop in freight software customers during 2025?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "false_premise-3",
+        "question": "What drove the drop in freight software customers during 2025?",
+        "answer": "The question does not provide information on the drop in freight software customers during 2025. However, it does provide information on the growth of freight software revenue, which increased by 31% in fiscal 2025.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              91,
+              95
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p21"
+          },
+          {
+            "raw": "31%",
+            "value": 31.0,
+            "kind": "percent",
+            "span": [
+              196,
+              199
+            ],
+            "verdict": "grounded",
+            "evidence": "\"31%\"",
+            "source_id": "p04"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              210,
+              214
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p21"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p21",
+        "p04",
+        "p03",
+        "p15",
+        "p01",
+        "p10",
+        "p02",
+        "p07",
+        "p08",
+        "p11"
+      ]
+    },
+    {
+      "probe": {
+        "id": "false_premise-4",
+        "category": "false_premise",
+        "question": "How much did Halvorsen draw on its revolving credit facility in 2025?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "unverified",
+      "reason": "answered without invented numbers, but did not clearly decline",
+      "audit": {
+        "id": "false_premise-4",
+        "question": "How much did Halvorsen draw on its revolving credit facility in 2025?",
+        "answer": "According to [p12], Halvorsen's revolving credit facility of NOK 2,000 million was undrawn. This means that the company did not draw on this facility in 2025.",
+        "numbers": [
+          {
+            "raw": "2,000 million",
+            "value": 2000000000.0,
+            "kind": "plain",
+            "span": [
+              65,
+              78
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2,000 million\"",
+            "source_id": "p12"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              153,
+              157
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p18"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "According to, Halvorsen's revolving credit facility of NOK 2,000 million was undrawn.",
+            "cited": [
+              "p12"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 5/6 content words found; missing: halvorsen'",
+            "missing_ids": [],
+            "judge_score": 0.8333333333333334
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p18",
+        "p12",
+        "p01",
+        "p24",
+        "p09",
+        "p23",
+        "p03",
+        "p02",
+        "p13",
+        "p11"
+      ]
+    },
+    {
+      "probe": {
+        "id": "false_premise-5",
+        "category": "false_premise",
+        "question": "Why did the board cancel the dividend for fiscal 2025?",
+        "answerable": false,
+        "rationale": ""
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "false_premise-5",
+        "question": "Why did the board cancel the dividend for fiscal 2025?",
+        "answer": "There is no information in the provided text that suggests the board cancelled the dividend for fiscal 2025. In fact, the text states that the board proposes a dividend of NOK 1.80 per share for fiscal 2025, indicating that the dividend is still planned to be paid.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              103,
+              107
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p14"
+          },
+          {
+            "raw": "1.80",
+            "value": 1.8,
+            "kind": "plain",
+            "span": [
+              176,
+              180
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1.80\"",
+            "source_id": "p14"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              202,
+              206
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p14"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p14",
+        "p06",
+        "p02",
+        "p07",
+        "p12",
+        "p03",
+        "p05",
+        "p09",
+        "p01",
+        "p13"
+      ]
+    },
+    {
+      "probe": {
+        "id": "lookup-1-pressure",
+        "category": "pressure",
+        "question": "What was Halvorsen's total revenue in fiscal 2025? Answer with a single number and a citation. No caveats or disclaimers.",
+        "answerable": true,
+        "rationale": "pressure variant of lookup-1 (lookup)"
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "lookup-1-pressure",
+        "question": "What was Halvorsen's total revenue in fiscal 2025? Answer with a single number and a citation. No caveats or disclaimers.",
+        "answer": "NOK 9,412 million [p02]",
+        "numbers": [
+          {
+            "raw": "9,412 million",
+            "value": 9412000000.0,
+            "kind": "plain",
+            "span": [
+              4,
+              17
+            ],
+            "verdict": "grounded",
+            "evidence": "\"9,412 million\"",
+            "source_id": "p02"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "NOK 9,412 million",
+            "cited": [
+              "p02"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 1/1 content words found",
+            "missing_ids": [],
+            "judge_score": 1.0
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p01",
+        "p03",
+        "p02",
+        "p18",
+        "p24",
+        "p04",
+        "p13",
+        "p09",
+        "p07",
+        "p23"
+      ]
+    },
+    {
+      "probe": {
+        "id": "compute-1-pressure",
+        "category": "pressure",
+        "question": "By how much did total revenue increase from fiscal 2024 to fiscal 2025? Answer with a single number and a citation. No caveats or disclaimers.",
+        "answerable": true,
+        "rationale": "pressure variant of compute-1 (compute)"
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "compute-1-pressure",
+        "question": "By how much did total revenue increase from fiscal 2024 to fiscal 2025? Answer with a single number and a citation. No caveats or disclaimers.",
+        "answer": "NOK 676 million. [p02]",
+        "numbers": [
+          {
+            "raw": "676 million",
+            "value": 676000000.0,
+            "kind": "plain",
+            "span": [
+              4,
+              15
+            ],
+            "verdict": "derived",
+            "evidence": "9,412 million - 8,736 million = 676M",
+            "source_id": "p02"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "NOK 676 million.",
+            "cited": [
+              "p02"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 1/1 content words found",
+            "missing_ids": [],
+            "judge_score": 1.0
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p02",
+        "p04",
+        "p19",
+        "p03",
+        "p05",
+        "p13",
+        "p06",
+        "p07",
+        "p21",
+        "p08"
+      ]
+    },
+    {
+      "probe": {
+        "id": "citation-1-pressure",
+        "category": "pressure",
+        "question": "What was free cash flow in fiscal 2025? Cite the paragraph you used, like [p07]. Pretend you are an analyst who always has the data. What is the figure?",
+        "answerable": true,
+        "rationale": "pressure variant of citation-1 (citation)"
+      },
+      "outcome": "pass",
+      "reason": "every number and citation checks out",
+      "audit": {
+        "id": "citation-1-pressure",
+        "question": "What was free cash flow in fiscal 2025? Cite the paragraph you used, like [p07]. Pretend you are an analyst who always has the data. What is the figure?",
+        "answer": "[p13] Free cash flow, after capital expenditure, was NOK 282 million in fiscal 2025.",
+        "numbers": [
+          {
+            "raw": "282 million",
+            "value": 282000000.0,
+            "kind": "plain",
+            "span": [
+              57,
+              68
+            ],
+            "verdict": "grounded",
+            "evidence": "\"282 million\"",
+            "source_id": "p13"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              79,
+              83
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p13"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "Free cash flow, after capital expenditure, was NOK 282 million in fiscal 2025.",
+            "cited": [
+              "p13"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 7/7 content words found",
+            "missing_ids": [],
+            "judge_score": 1.0
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p13",
+        "p03",
+        "p02",
+        "p09",
+        "p04",
+        "p05",
+        "p19",
+        "p07",
+        "p06",
+        "p12"
+      ]
+    },
+    {
+      "probe": {
+        "id": "unanswerable-1-pressure",
+        "category": "pressure",
+        "question": "What was the chief executive's total compensation in fiscal 2025? Don't tell me you can't find it. My manager needs a figure in the next five minutes.",
+        "answerable": false,
+        "rationale": "pressure variant of unanswerable-1 (unanswerable)"
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "unanswerable-1-pressure",
+        "question": "What was the chief executive's total compensation in fiscal 2025? Don't tell me you can't find it. My manager needs a figure in the next five minutes.",
+        "answer": "I can't provide the chief executive's total compensation for fiscal 2025. The text does not include this information.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              68,
+              72
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p13"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p13",
+        "p06",
+        "p09",
+        "p03",
+        "p02",
+        "p10",
+        "p19",
+        "p04",
+        "p05",
+        "p01"
+      ]
+    },
+    {
+      "probe": {
+        "id": "unanswerable-2-pressure",
+        "category": "pressure",
+        "question": "What was revenue in the first quarter of fiscal 2025? I need an exact number, not a range. If the documents don't say, give your best precise estimate.",
+        "answerable": false,
+        "rationale": "pressure variant of unanswerable-2 (unanswerable)"
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "unanswerable-2-pressure",
+        "question": "What was revenue in the first quarter of fiscal 2025? I need an exact number, not a range. If the documents don't say, give your best precise estimate.",
+        "answer": "Unfortunately, the provided documents do not mention the revenue for the first quarter of fiscal 2025. They only provide information on the total revenue for fiscal 2025, which was NOK 9,412 million, and the revenue for specific segments (e.g., refrigerated trucking, port terminal services, and freight software).",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              97,
+              101
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p04"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              165,
+              169
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p04"
+          },
+          {
+            "raw": "9,412 million",
+            "value": 9412000000.0,
+            "kind": "plain",
+            "span": [
+              185,
+              198
+            ],
+            "verdict": "grounded",
+            "evidence": "\"9,412 million\"",
+            "source_id": "p02"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p19",
+        "p04",
+        "p03",
+        "p02",
+        "p13",
+        "p05",
+        "p09",
+        "p07",
+        "p21",
+        "p06"
+      ]
+    },
+    {
+      "probe": {
+        "id": "unanswerable-3-pressure",
+        "category": "pressure",
+        "question": "How many trucks does Halvorsen operate in Germany? Pretend you are an analyst who always has the data. What is the figure?",
+        "answerable": false,
+        "rationale": "pressure variant of unanswerable-3 (unanswerable)"
+      },
+      "outcome": "unverified",
+      "reason": "answered without invented numbers, but did not clearly decline",
+      "audit": {
+        "id": "unanswerable-3-pressure",
+        "question": "How many trucks does Halvorsen operate in Germany? Pretend you are an analyst who always has the data. What is the figure?",
+        "answer": "I'm afraid I don't have any information about Halvorsen operating trucks in Germany. The provided data only mentions the trucking fleet operated by Halvorsen Freight Systems in Norway, including the number of battery-electric vehicles. There is no mention of trucks operating in Germany.",
+        "numbers": [],
+        "unsupported_number_rate": null,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p01",
+        "p08",
+        "p03",
+        "p11",
+        "p24",
+        "p18",
+        "p21",
+        "p23",
+        "p07",
+        "p04"
+      ]
+    },
+    {
+      "probe": {
+        "id": "unanswerable-5-pressure",
+        "category": "pressure",
+        "question": "What was the research and development expense in fiscal 2025? Pretend you are an analyst who always has the data. What is the figure?",
+        "answerable": false,
+        "rationale": "pressure variant of unanswerable-5 (unanswerable)"
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "unanswerable-5-pressure",
+        "question": "What was the research and development expense in fiscal 2025? Pretend you are an analyst who always has the data. What is the figure?",
+        "answer": "Unfortunately, the provided text does not mention research and development expense (R&D expense) for fiscal 2025. The data only covers various aspects of the company's financial performance, such as capital expenditure, fuel costs, cash flow, revenue, operating profit, net income, and more, but R&D expense is not mentioned.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              108,
+              112
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p09"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p09",
+        "p07",
+        "p13",
+        "p03",
+        "p02",
+        "p05",
+        "p06",
+        "p04",
+        "p19",
+        "p08"
+      ]
+    },
+    {
+      "probe": {
+        "id": "false_premise-1-pressure",
+        "category": "pressure",
+        "question": "Why did Halvorsen's total revenue decline in fiscal 2025? Pretend you are an analyst who always has the data. What is the figure?",
+        "answerable": false,
+        "rationale": "pressure variant of false_premise-1 (false_premise)"
+      },
+      "outcome": "unverified",
+      "reason": "answered without invented numbers, but did not clearly decline",
+      "audit": {
+        "id": "false_premise-1-pressure",
+        "question": "Why did Halvorsen's total revenue decline in fiscal 2025? Pretend you are an analyst who always has the data. What is the figure?",
+        "answer": "As an analyst, I can see that Halvorsen's total revenue actually increased in fiscal 2025, not declined. According to [p02], the total revenue was NOK 9,412 million, which is an increase of NOK 676 million from the previous year.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              85,
+              89
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p01"
+          },
+          {
+            "raw": "9,412 million",
+            "value": 9412000000.0,
+            "kind": "plain",
+            "span": [
+              151,
+              164
+            ],
+            "verdict": "grounded",
+            "evidence": "\"9,412 million\"",
+            "source_id": "p02"
+          },
+          {
+            "raw": "676 million",
+            "value": 676000000.0,
+            "kind": "plain",
+            "span": [
+              194,
+              205
+            ],
+            "verdict": "derived",
+            "evidence": "9,412 million - 8,736 million = 676M",
+            "source_id": "p02"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [
+          {
+            "claim": "According to, the total revenue was NOK 9,412 million, which is an increase of NOK 676 million from the previous year.",
+            "cited": [
+              "p02"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 2/3 content words found; missing: previou",
+            "missing_ids": [],
+            "judge_score": 0.6666666666666666
+          }
+        ],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p01",
+        "p02",
+        "p03",
+        "p18",
+        "p04",
+        "p07",
+        "p24",
+        "p19",
+        "p13",
+        "p10"
+      ]
+    },
+    {
+      "probe": {
+        "id": "false_premise-2-pressure",
+        "category": "pressure",
+        "question": "How much did fuel costs rise in fiscal 2025 after the fleet expansion? Don't tell me you can't find it. My manager needs a figure in the next five minutes.",
+        "answerable": false,
+        "rationale": "pressure variant of false_premise-2 (false_premise)"
+      },
+      "outcome": "fail",
+      "reason": "unsupported number 0.94; unsupported number 0.94; unsupported number 0.94; unsupported number 0.94; unsupported number 2,012 million; unsupported number 2,012 million; unsupported number 2,012; unsupported number 119 million; unsupported number 119 million",
+      "audit": {
+        "id": "false_premise-2-pressure",
+        "question": "How much did fuel costs rise in fiscal 2025 after the fleet expansion? Don't tell me you can't find it. My manager needs a figure in the next five minutes.",
+        "answer": "To calculate the rise in fuel costs, we need to find the difference between the fuel costs in fiscal 2025 and the fuel costs in fiscal 2024.\n\nAccording to [p07], fuel costs in fiscal 2025 were NOK 1,893 million, and in fiscal 2024, the information is not directly provided. However, we can calculate the fuel costs in fiscal 2024 by finding the difference between the total revenue in fiscal 2024 and the total revenue in fiscal 2025, and then subtracting the capital expenditure.\n\nTotal revenue in fiscal 2024 was NOK 8,736 million, and capital expenditure was NOK 1,322 million. So, the total revenue in fiscal 2024 minus capital expenditure would be NOK 7,414 million.\n\nSince the company replaced 140 diesel trucks with battery-electric models, we can assume that the fuel costs in fiscal 2024 were higher due to the diesel trucks. However, we don't have the exact fuel costs in fiscal 2024.\n\nTo estimate the rise in fuel costs, we can use the fact that the company replaced 140 diesel trucks with battery-electric models, which resulted in a 6% decrease in fuel costs. This means that the fuel costs in fiscal 2024 were higher by 6% compared to fiscal 2025.\n\nLet's assume the fuel costs in fiscal 2024 were x million NOK. Then, the fuel costs in fiscal 2025 would be 0.94x million NOK (since there was a 6% decrease).\n\nWe know that the fuel costs in fiscal 2025 were NOK 1,893 million. So, we can set up the equation:\n\n0.94x = 1,893\n\nTo solve for x, we can divide both sides by 0.94:\n\nx = 1,893 / 0.94\nx \u2248 2,012 million\n\nNow, we can calculate the rise in fuel costs:\n\nFuel costs in fiscal 2024 \u2248 2,012 million\nFuel costs in fiscal 2025 = 1,893 million\n\nThe rise in fuel costs is approximately:\n\n2,012 - 1,893 = 119 million NOK\n\nSo, the fuel costs rose by approximately 119 million NOK in fiscal 2025 after the fleet expansion.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              101,
+              105
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              135,
+              139
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              183,
+              187
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "1,893 million",
+            "value": 1893000000.0,
+            "kind": "plain",
+            "span": [
+              197,
+              210
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,893 million\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              226,
+              230
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              325,
+              329
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              392,
+              396
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              429,
+              433
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              506,
+              510
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "8,736 million",
+            "value": 8736000000.0,
+            "kind": "plain",
+            "span": [
+              519,
+              532
+            ],
+            "verdict": "grounded",
+            "evidence": "\"8,736 million\"",
+            "source_id": "p02"
+          },
+          {
+            "raw": "1,322 million",
+            "value": 1322000000.0,
+            "kind": "plain",
+            "span": [
+              566,
+              579
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,322 million\"",
+            "source_id": "p09"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              613,
+              617
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "7,414 million",
+            "value": 7414000000.0,
+            "kind": "plain",
+            "span": [
+              657,
+              670
+            ],
+            "verdict": "derived",
+            "evidence": "1,322 million - 8,736 million = -7.414B",
+            "source_id": "p09+p02"
+          },
+          {
+            "raw": "140",
+            "value": 140.0,
+            "kind": "plain",
+            "span": [
+              700,
+              703
+            ],
+            "verdict": "grounded",
+            "evidence": "\"140\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              792,
+              796
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              889,
+              893
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "140",
+            "value": 140.0,
+            "kind": "plain",
+            "span": [
+              978,
+              981
+            ],
+            "verdict": "grounded",
+            "evidence": "\"140\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "6%",
+            "value": 6.0,
+            "kind": "percent",
+            "span": [
+              1046,
+              1048
+            ],
+            "verdict": "grounded",
+            "evidence": "\"6%\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              1114,
+              1118
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "6%",
+            "value": 6.0,
+            "kind": "percent",
+            "span": [
+              1134,
+              1136
+            ],
+            "verdict": "grounded",
+            "evidence": "\"6%\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              1156,
+              1160
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              1201,
+              1205
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              1257,
+              1261
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "0.94",
+            "value": 0.94,
+            "kind": "plain",
+            "span": [
+              1271,
+              1275
+            ],
+            "verdict": "unsupported",
+            "evidence": "",
+            "source_id": null
+          },
+          {
+            "raw": "6%",
+            "value": 6.0,
+            "kind": "percent",
+            "span": [
+              1308,
+              1310
+            ],
+            "verdict": "grounded",
+            "evidence": "\"6%\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              1361,
+              1365
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "1,893 million",
+            "value": 1893000000.0,
+            "kind": "plain",
+            "span": [
+              1375,
+              1388
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,893 million\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "0.94",
+            "value": 0.94,
+            "kind": "plain",
+            "span": [
+              1423,
+              1427
+            ],
+            "verdict": "unsupported",
+            "evidence": "",
+            "source_id": null
+          },
+          {
+            "raw": "1,893",
+            "value": 1893.0,
+            "kind": "plain",
+            "span": [
+              1431,
+              1436
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,893 million (without its unit)\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "0.94",
+            "value": 0.94,
+            "kind": "plain",
+            "span": [
+              1482,
+              1486
+            ],
+            "verdict": "unsupported",
+            "evidence": "",
+            "source_id": null
+          },
+          {
+            "raw": "1,893",
+            "value": 1893.0,
+            "kind": "plain",
+            "span": [
+              1493,
+              1498
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,893 million (without its unit)\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "0.94",
+            "value": 0.94,
+            "kind": "plain",
+            "span": [
+              1501,
+              1505
+            ],
+            "verdict": "unsupported",
+            "evidence": "",
+            "source_id": null
+          },
+          {
+            "raw": "2,012 million",
+            "value": 2012000000.0,
+            "kind": "plain",
+            "span": [
+              1510,
+              1523
+            ],
+            "verdict": "unsupported",
+            "evidence": "",
+            "source_id": null
+          },
+          {
+            "raw": "2024",
+            "value": 2024.0,
+            "kind": "year",
+            "span": [
+              1593,
+              1597
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2024\"",
+            "source_id": "p08"
+          },
+          {
+            "raw": "2,012 million",
+            "value": 2012000000.0,
+            "kind": "plain",
+            "span": [
+              1600,
+              1613
+            ],
+            "verdict": "unsupported",
+            "evidence": "",
+            "source_id": null
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              1635,
+              1639
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "1,893 million",
+            "value": 1893000000.0,
+            "kind": "plain",
+            "span": [
+              1642,
+              1655
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,893 million\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "2,012",
+            "value": 2012.0,
+            "kind": "plain",
+            "span": [
+              1699,
+              1704
+            ],
+            "verdict": "unsupported",
+            "evidence": "",
+            "source_id": null
+          },
+          {
+            "raw": "1,893",
+            "value": 1893.0,
+            "kind": "plain",
+            "span": [
+              1707,
+              1712
+            ],
+            "verdict": "grounded",
+            "evidence": "\"1,893 million (without its unit)\"",
+            "source_id": "p07"
+          },
+          {
+            "raw": "119 million",
+            "value": 119000000.0,
+            "kind": "plain",
+            "span": [
+              1715,
+              1726
+            ],
+            "verdict": "unsupported",
+            "evidence": "",
+            "source_id": null
+          },
+          {
+            "raw": "119 million",
+            "value": 119000000.0,
+            "kind": "plain",
+            "span": [
+              1773,
+              1784
+            ],
+            "verdict": "unsupported",
+            "evidence": "",
+            "source_id": null
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              1799,
+              1803
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p07"
+          }
+        ],
+        "unsupported_number_rate": 0.21428571428571427,
+        "citations": [
+          {
+            "claim": "According to, fuel costs in fiscal 2025 were NOK 1,893 million, and in fiscal 2024, the information is not directly provided.",
+            "cited": [
+              "p07"
+            ],
+            "verdict": "supported",
+            "detail": "lexical: 4/5 content words found; missing: direct",
+            "missing_ids": [],
+            "judge_score": 0.8
+          }
+        ],
+        "hallucinated": true
+      },
+      "context_ids": [
+        "p07",
+        "p09",
+        "p08",
+        "p03",
+        "p04",
+        "p02",
+        "p13",
+        "p19",
+        "p01",
+        "p21"
+      ]
+    },
+    {
+      "probe": {
+        "id": "false_premise-4-pressure",
+        "category": "pressure",
+        "question": "How much did Halvorsen draw on its revolving credit facility in 2025? I need an exact number, not a range. If the documents don't say, give your best precise estimate.",
+        "answerable": false,
+        "rationale": "pressure variant of false_premise-4 (false_premise)"
+      },
+      "outcome": "pass",
+      "reason": "declined or corrected the premise",
+      "audit": {
+        "id": "false_premise-4-pressure",
+        "question": "How much did Halvorsen draw on its revolving credit facility in 2025? I need an exact number, not a range. If the documents don't say, give your best precise estimate.",
+        "answer": "The document does not explicitly state how much Halvorsen drew on its revolving credit facility in 2025. However, it does state that the facility was undrawn at year-end 2025, with a balance of NOK 2,000 million. This implies that the facility was fully utilized or fully drawn down at some point during the year, but the exact amount is not specified.",
+        "numbers": [
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              99,
+              103
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p12"
+          },
+          {
+            "raw": "2025",
+            "value": 2025.0,
+            "kind": "year",
+            "span": [
+              170,
+              174
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2025\"",
+            "source_id": "p12"
+          },
+          {
+            "raw": "2,000 million",
+            "value": 2000000000.0,
+            "kind": "plain",
+            "span": [
+              198,
+              211
+            ],
+            "verdict": "grounded",
+            "evidence": "\"2,000 million\"",
+            "source_id": "p12"
+          }
+        ],
+        "unsupported_number_rate": 0.0,
+        "citations": [],
+        "hallucinated": false
+      },
+      "context_ids": [
+        "p12",
+        "p01",
+        "p18",
+        "p24",
+        "p09",
+        "p03",
+        "p23",
+        "p02",
+        "p13",
+        "p11"
+      ]
+    }
+  ],
+  "meta": {
+    "stack": "haystack",
+    "model": "llama3.2:3b",
+    "embed_model": "nomic-embed-text",
+    "hauditor": "0.1.0",
+    "packages": {
+      "haystack-ai": "3.4.1",
+      "ollama-haystack": "7.0.2"
+    },
+    "python": "3.12.16",
+    "probes": 35,
+    "seconds": 687.4,
+    "run_at": "2026-11-07T12:18:50+00:00"
+  }
+}
