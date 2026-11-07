@@ -105,6 +105,21 @@ Hauditor score  50/100   (demo-rag, 22 probes)
 
 In `honest` mode the same probes score 100.
 
+## How accurate is it?
+
+Hauditor is measured on a benchmark of honest answers with one planted error each, so every label is known by construction ([details](benchmarks/README.md)). On the held-out set, written and committed before its first run:
+
+| | Held-out (221 cases) |
+|---|---|
+| Precision (flags that were real) | **100%** |
+| Recall (planted errors caught) | **93.3%** |
+
+It catches every shifted, transposed or rescaled figure, wrong year, invented claim, fabricated or misattributed citation and wrong calculation in that set, with no false alarms on rounding, hedged figures, correct arithmetic or reworded units. Its blind spot is two real figures swapped with each other, which it catches only when the swap also changes a figure's scale. The benchmark also found three parser bugs, which are now fixed.
+
+```bash
+hauditor bench benchmarks/corpus_heldout.jsonl --show-misses
+```
+
 ## Install and run
 
 ```bash
@@ -148,7 +163,9 @@ Live mode spots refusals and premise corrections with a phrase list ("the docume
 - [x] CLI, JSON output and HTML report
 - [x] Citation checking: does the cited passage exist, contain the numbers, and support the sentence?
 - [x] Live mode: probe a running app with generated tough questions and give it a 0-100 score
-- [ ] Benchmark of public 10-K questions with planted hallucinations, to measure Hauditor's own precision and recall
+- [x] Benchmark with planted hallucinations to measure Hauditor's own precision and recall
+- [ ] Catch swapped figures by tying each number to what it measures
+- [ ] Add real SEC 10-K passages to the benchmark
 - [ ] Public leaderboard: live mode run against common RAG stacks and models
 
 ## License
