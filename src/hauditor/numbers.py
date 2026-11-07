@@ -62,6 +62,12 @@ _NUMBER_RE = re.compile(
 _HEDGE_RE = re.compile(r"(?:\b(?:about|approximately|approx\.|around|roughly|nearly|almost|some)|~)\s*$", re.IGNORECASE)
 # Words that make a number negative: "negative 3.2%".
 _SIGN_WORD_RE = re.compile(r"\b(?:negative|minus)\s+$", re.IGNORECASE)
+# "page 15", "see note 7", "paragraph 18": references, not figures.
+_REF_RE = re.compile(
+    r"\b(?:page|pages|pp?\.|paragraph|para\.?|section|sec\.|item|note|chapter|table|figure|fig\.|exhibit|"
+    r"slide|line|footnote|appendix)\s*$",
+    re.IGNORECASE,
+)
 # "December 31" or "Dec. 31": a day of the month, not a figure.
 _MONTH_RE = re.compile(
     r"\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|"
@@ -136,6 +142,10 @@ def extract(text: str, *, ignore_small_ints: int = 10) -> list[Quantity]:
 
         if decimals == 0 and scale == 1.0 and value <= 31 and _MONTH_RE.search(before_text):
             continue  # day of the month
+        if decimals == 0 and scale == 1.0 and not m.group("cur") and not m.group("pct") and _REF_RE.search(before_text):
+            continue  # "page 15", "paragraph 18": a pointer into a document, not a figure
+        if value == 100 and re.search(r"(?:[x*\u00d7]|\\times|\btimes|multipl(?:y|ied) by)\s*$", before_text):
+            continue  # "(a / b) x 100": turning a ratio into a percentage
 
         # "-5" is negative, but not the hyphen in "Q3-2024" or "2023-2024".
         # "(342)" and "$(342)" are negative (accounting style), but a year in

@@ -79,6 +79,7 @@ class ProbeResult:
         }
         if self.result is not None:
             d["audit"] = self.result.to_dict()
+            d["context_ids"] = [c.id for c in self.result.record.contexts]
         if self.error:
             d["error"] = self.error
         return d

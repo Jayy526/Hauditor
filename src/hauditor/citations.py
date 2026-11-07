@@ -175,8 +175,13 @@ _STOP = set(
     their there these this those to was were which while with will would than then also about over
     under after before during not no more most less very such can could may might should our your
     they them he she we you i his her him who whom what when where why how all any both each few
-    other some same so too only own just per vs thousand million billion trillion percent""".split()  # noqa: SIM905
+    other some same so too only own just per vs thousand million billion trillion percent
+    information info data figure figures context document documents source sources passage paragraph text
+    report cited cite found find sourced stated states state says said given provided mentioned according
+    recorded noted shown year years time represent represents represented""".split()  # noqa: SIM905
 )
+# Those last words are how answers point at their sources ("This information is
+# found in [p18]"). A sentence made only of them makes no claim to check.
 
 
 def _stem(w: str) -> str:
