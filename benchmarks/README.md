@@ -119,6 +119,20 @@ The first attempt over-fired. It flagged honest answers that restate the periods
 
 Held-out set 1 was used while building this, so it no longer counts as held out. A second held-out set was written and committed (with the alignment code, in the same commit) before its first run. Its results above are the current honest estimate. The one miss there is a shifted figure that happened to equal an arithmetic combination of other source numbers.
 
+## Round three: real model answers
+
+The first [leaderboard](../leaderboard/README.md) run was the first time Hauditor graded answers that real models wrote freely. I checked every failure by hand. About 60% of them were Hauditor being wrong, not the model. The benchmark had missed this because its honest answers stay close to the source wording, and real answers don't. The causes and fixes:
+
+- **The alignment check borrowed years from other figures.** In "Earnings per share were NOK 4.12, up from NOK 3.57 in fiscal 2024", the 4.12 was tied to 2024. Now a year is tied to a figure only when it is written right next to it ("X in fiscal 2025", "2024: X", "X (year-end 2024)"), or is the only free year in the clause or sentence. If the source never ties the value to a year, years can't be used to show it was misused. A figure that the source only mentions in passing ("up from X") is never compared.
+- **Words around a figure leaked from its neighbour.** In "Port revenue: NOK 2,614 million - Freight software revenue: NOK 818 million", the words after 2,614 belong to 818. Labels now come from before a figure, and " - ", " + ", " = " and line breaks separate clauses. Currency codes like "NOK" no longer count as describing words.
+- **Calculations restate figures without units.** "(5,980 / 9,412) x 100" now matches "NOK 5,980 million", and the "100" in "x 100" is no longer read as a figure.
+- **Sums of three.** "5,980 + 2,614 + 818 = 9,412" is now recognised when all three come from one passage.
+- **"A year earlier".** "2024" counts as supported when the source says "a year earlier" next to 2025.
+- **Pointing at a source isn't a claim.** "This information is found in [p18]" was judged as a claim and failed. Words like these are now ignored, and so are "page 15" and "paragraph 18".
+- **Coincidences across passages.** With ten passages retrieved, some pair of unrelated figures will produce almost any number. Wrong answers passed this way, for example "NOK 0.32" as 4.12 minus a 3.8 injury rate from another paragraph. Now a calculation must use figures from one passage, or figures the answer itself shows. Mixed operations, like a percentage divided by a percentage to give a count, no longer count at all.
+
+Each fix has a regression test built from the actual model answer ([`tests/test_real_answers.py`](../tests/test_real_answers.py)). On the three benchmark sets, precision stayed at 100%. Recall went up to 100%, because removing chance calculations also stopped some planted errors from passing. All three sets have now been looked at during development, so the next held-out set will be the honest estimate.
+
 ## Caveats
 
 - The passages describe fictional companies written for this benchmark, in the style of annual-report text. The plan is to add passages from real SEC 10-K filings once this environment can reach sec.gov.
